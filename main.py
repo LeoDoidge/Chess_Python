@@ -40,6 +40,8 @@ def draw_board():
 
 running = True  # Flag to control the game loop
 selected_piece = None  # Variable to store selected piece
+game_clock = 0
+successful_moves = 0
 
 # Main game loop
 while running:
@@ -51,19 +53,29 @@ while running:
             click_pos = pygame.mouse.get_pos()
             square_clicked = grid.square_pos(click_pos)
 
-            if not selected_piece:  # If no piece is selected
-                if grid.check_occup(click_pos):
+            if not selected_piece:  # No piece is selected
+                if grid.check_occup(click_pos) and grid.color(square_clicked) == ("w" if game_clock % 2 == 0 else "b"):
                     selected_piece = square_clicked
-            else:  # If a piece is already selected
+                else:
+                    # Optionally, show a message that it's not the player's turn
+                    print("It's not your turn!")
+            else:  # A piece is selected
+                move_made = False  # Track if a move was made
                 if grid.check_occup(click_pos):
                     if grid.color(square_clicked) != grid.color(selected_piece):
-                        grid.eat_piece(selected_piece, square_clicked)
-                        selected_piece = None
-                    else:
-                        selected_piece = None
+                        move_made = grid.eat_piece(selected_piece, square_clicked)
                 else:
-                    grid.move_piece(selected_piece, square_clicked)
+                    move_made = grid.move_piece(selected_piece, square_clicked, game_clock)
+                
+                if move_made:
+                    game_clock += 1  # Move was successful, increment turn
+                    selected_piece = None  # Clear the selection
+                else:
+                    # Clear the selection if the move was not successful
                     selected_piece = None
+                    # Optionally, indicate the move was invalid
+                    print("Invalid move!")
+
 
     screen.fill((0, 0, 0))  # Clearing the screen
     draw_board()  # Drawing the chessboard and pieces

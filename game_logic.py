@@ -36,6 +36,10 @@ class Grid:
         piece = self.grid[y][x]
         return piece[0]
 
+    def type_piece(self, square_clicked):
+        x, y = square_clicked
+        return self.grid[y][x]
+
     def check_occup(self, pos):
         if pos == []:
             pass
@@ -80,10 +84,14 @@ class Grid:
         square_pos = (int(x / H * 8), int(y / H * 8))
         return square_pos
 
-    def move_piece(self, start_pos, end_pos):
+    def move_piece(self, start_pos, end_pos, game_clock):
         start_x, start_y = start_pos
         end_x, end_y = end_pos
+        current_turn = "w" if game_clock % 2 == 0 else "b"
 
+        if self.color(start_pos) != current_turn:
+            return False
+        
         # Ensure the start position is valid
         if not (0 <= start_x < 8 and 0 <= start_y < 8):
             return False
@@ -107,6 +115,7 @@ class Grid:
     def eat_piece(self, start_pos, end_pos):
         start_x, start_y = start_pos
         end_x, end_y = end_pos
+        type_piece = self.grid[start_y][start_x]
 
         # Ensure the start position is valid
         if not (0 <= start_x < 8 and 0 <= start_y < 8):
@@ -130,66 +139,3 @@ class Grid:
 
         return False  # Return False if the eat is not valid
 
-
-# Pieces logic
-
-
-def load_image(imagename):
-    return pygame.image.load(imagename)
-
-
-class Piece:
-    def __init__(self, x, y, color):
-        self.x = x
-        self.y = y
-        if color == 0:
-            color = "w"
-        else:
-            color = "b"
-        self.color = color
-
-    def get_name(self):
-        return [self.name]
-
-    def position(self, x, y):
-        self.x = x
-        self.y = y
-
-    def get_legal_moves(self):
-        return []
-
-
-class King(Piece):
-    def __init__(self, x, y, color):
-        super().__init__(x, y, color)
-        self.name = self.color + "K"
-
-
-class Queen(Piece):
-    def __init__(self, x, y, color):
-        super().__init__(x, y, color)
-        self.name = self.color + "Q"
-
-
-class Pawn(Piece):
-    def __init__(self, x, y, color):
-        super().__init__(x, y, color)
-        self.name = self.color + "p"
-
-
-class Knight(Piece):
-    def __init__(self, x, y, color):
-        super().__init__(x, y, color)
-        self.name = self.color + "N"
-
-
-class Bishop(Piece):
-    def __init__(self, x, y, color):
-        super().__init__(x, y, color)
-        self.name = self.color + "B"
-
-
-class Rook(Piece):
-    def __init__(self, x, y, color):
-        super().__init__(x, y, color)
-        self.name = self.color + "R"
