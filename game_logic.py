@@ -40,13 +40,7 @@ class Grid:
         x, y = square_clicked
         return self.grid[y][x]
 
-    def check_occup(self, pos):
-        if pos == []:
-            pass
-        else:
-            x = pos[0]
-            y = pos[1]
-            square_pos = (int(x / H * 8), int(y / H * 8))
+    def check_occup(self, square_pos):
             for i in range(8):
                 for j in range(8):
                     if square_pos == (i, j):

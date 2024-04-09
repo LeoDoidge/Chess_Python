@@ -54,7 +54,7 @@ while running:
             square_clicked = grid.square_pos(click_pos)
 
             if not selected_piece:  # If no piece was previously selected / highlighted
-                if grid.check_occup(click_pos) and grid.color(square_clicked) == (
+                if grid.check_occup(square_clicked) and grid.color(square_clicked) == (
                     "w" if game_clock % 2 == 0 else "b"
                 ):
                     selected_piece = square_clicked
@@ -62,7 +62,7 @@ while running:
                     print("It's not your turn!")
             else:  # A piece was previously selected / highlighed
                 move_made = False
-                if grid.check_occup(click_pos):
+                if grid.check_occup(square_clicked):
                     if grid.color(square_clicked) != grid.color(selected_piece):
                         move_made = grid.eat_piece(selected_piece, square_clicked)
                 else:
