@@ -91,7 +91,7 @@ class Grid:
 
         if self.color(start_pos) != current_turn:
             return False
-        
+
         # Ensure the start position is valid
         if not (0 <= start_x < 8 and 0 <= start_y < 8):
             return False
@@ -138,4 +138,3 @@ class Grid:
             return True
 
         return False  # Return False if the eat is not valid
-

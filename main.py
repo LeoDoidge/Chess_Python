@@ -38,8 +38,8 @@ def draw_board():
         grid.highlight(highlighted_pos, square_clicked)
 
 
-running = True  # Flag to control the game loop
-selected_piece = None  # Variable to store selected piece
+running = True
+selected_piece = None
 game_clock = 0
 successful_moves = 0
 
@@ -47,46 +47,46 @@ successful_moves = 0
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            running = False  # Exit the game loop when window is closed
+            running = False
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
             click_pos = pygame.mouse.get_pos()
             square_clicked = grid.square_pos(click_pos)
 
-            if not selected_piece:  # No piece is selected
-                if grid.check_occup(click_pos) and grid.color(square_clicked) == ("w" if game_clock % 2 == 0 else "b"):
+            if not selected_piece:  # If no piece was previously selected / highlighted
+                if grid.check_occup(click_pos) and grid.color(square_clicked) == (
+                    "w" if game_clock % 2 == 0 else "b"
+                ):
                     selected_piece = square_clicked
                 else:
-                    # Optionally, show a message that it's not the player's turn
                     print("It's not your turn!")
-            else:  # A piece is selected
-                move_made = False  # Track if a move was made
+            else:  # A piece was previously selected / highlighed
+                move_made = False
                 if grid.check_occup(click_pos):
                     if grid.color(square_clicked) != grid.color(selected_piece):
                         move_made = grid.eat_piece(selected_piece, square_clicked)
                 else:
-                    move_made = grid.move_piece(selected_piece, square_clicked, game_clock)
-                
+                    move_made = grid.move_piece(
+                        selected_piece, square_clicked, game_clock
+                    )
+
                 if move_made:
-                    game_clock += 1  # Move was successful, increment turn
-                    selected_piece = None  # Clear the selection
-                else:
-                    # Clear the selection if the move was not successful
+                    game_clock += 1
                     selected_piece = None
-                    # Optionally, indicate the move was invalid
+                else:
+                    selected_piece = None
                     print("Invalid move!")
 
+    screen.fill((0, 0, 0))
+    draw_board()
 
-    screen.fill((0, 0, 0))  # Clearing the screen
-    draw_board()  # Drawing the chessboard and pieces
-
-    # Highlight the selected piece if it exists
-    if selected_piece:
+    if selected_piece:  # highlighting a piece if there should be one
         selected_piece_color = grid.color(selected_piece)
         grid.highlight(selected_piece, selected_piece)
 
-    pygame.display.update()  # Updating the display
-    clock.tick(10)  # Limiting the frame rate
+    pygame.display.update()
+    clock.tick(10)
 
-pygame.quit()  # Quitting pygame
-sys.exit()  # Exiting the script
+
+pygame.quit()
+sys.exit()
