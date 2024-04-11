@@ -41,13 +41,13 @@ class Grid:
         return self.grid[y][x]
 
     def check_occup(self, square_pos):
-            for i in range(8):
-                for j in range(8):
-                    if square_pos == (i, j):
-                        if self.grid[j][i] == "--":
-                            return False
-                        else:
-                            return True
+        for i in range(8):
+            for j in range(8):
+                if square_pos == (i, j):
+                    if self.grid[j][i] == "--":
+                        return False
+                    else:
+                        return True
 
     def highlight(self, start_pos, end_pos):
         start_x, start_y = start_pos
@@ -132,3 +132,111 @@ class Grid:
             return True
 
         return False  # Return False if the eat is not valid
+
+
+class Pieces:
+    def __init__(self) -> None:
+        None
+
+
+class Pawn(Pieces):
+    def __init__(self) -> None:
+        pass
+
+    def PawnRank(self, square_pos):
+        return square_pos[1]
+
+    def ValidMoves(self, start_pos, color):
+        ValidMoveList = []
+        x, y = start_pos
+        if color == "b":
+            y += 1
+            ValidMoveList.append((x, y))
+            if self.PawnRank(start_pos) == 1:
+                y += 1
+                ValidMoveList.append((x, y))
+        if color == "w":
+            y -= 1
+            ValidMoveList.append((x, y))
+            if self.PawnRank(start_pos) == 6:
+                y -= 1
+                ValidMoveList.append((x, y))
+        return ValidMoveList
+
+
+class Knight(Pieces):
+    def ValidMoves(self, start_pos):
+        x, y = start_pos
+        ValidMovesList = []
+        possible_moves = [
+            (2, 1),
+            (2, -1),
+            (-2, 1),
+            (-2, -1),
+            (1, 2),
+            (1, -2),
+            (-1, 2),
+            (-1, -2),
+        ]
+        for move in possible_moves:
+            new_x = x + move[0]
+            new_y = y + move[1]
+
+            if 0 <= new_x < 8 and 0 <= new_y < 8:
+                ValidMovesList.append((new_x, new_y))
+        return ValidMovesList
+
+
+class Bishop(Pieces):
+    def ValidMoves(self, start_pos):
+        x, y = start_pos
+        ValidMovesList = []
+        possible_moves = [(1, 1), (1, -1), (-1, 1), (-1, -1)]
+        for move in possible_moves:
+            for i in range(1, 8):
+                new_x = x + move[0] * i
+                new_y = y + move[1] * i
+                if 0 <= new_x < 8 and 0 <= new_y < 8:
+                    ValidMovesList.append((new_x, new_y))
+        return ValidMovesList
+
+
+class Rook(Pieces):
+    def ValidMoves(self, start_pos):
+        x, y = start_pos
+        ValidMovesList = []
+        possible_moves = [(0, 1), (0, -1), (-1, 0), (-1, -0)]
+        for move in possible_moves:
+            for i in range(1, 8):
+                new_x = x + move[0] * i
+                new_y = y + move[1] * i
+                if 0 <= new_x < 8 and 0 <= new_y < 8:
+                    ValidMovesList.append((new_x, new_y))
+        return ValidMovesList
+
+
+class Queen(Pieces):
+    def ValidMoves(self, start_pos):
+        x, y = start_pos
+        ValidMovesList = []
+        possible_moves = [(0, 1), (0, -1), (-1, 0), (-1, -0),(1, 1), (1, -1), (-1, 1), (-1, -1)]
+        for move in possible_moves:
+            for i in range(1, 8):
+                new_x = x + move[0] * i
+                new_y = y + move[1] * i
+                if 0 <= new_x < 8 and 0 <= new_y < 8:
+                    ValidMovesList.append((new_x, new_y))
+        return ValidMovesList
+
+
+class King(Pieces):
+    def ValidMoves(self, start_pos):
+        x, y = start_pos
+        ValidMovesList = []
+        possible_moves = [(0, 1), (0, -1), (-1, 0), (-1, -0),(1, 1), (1, -1), (-1, 1), (-1, -1)]
+        for move in possible_moves:
+            new_x = x + move[0] 
+            new_y = y + move[1] 
+            if 0 <= new_x < 8 and 0 <= new_y < 8:
+                ValidMovesList.append((new_x, new_y))
+        return ValidMovesList
