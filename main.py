@@ -52,7 +52,6 @@ while running:
         elif event.type == pygame.MOUSEBUTTONDOWN:
             click_pos = pygame.mouse.get_pos()
             square_clicked = grid.square_pos(click_pos)
-            print(square_clicked)
 
             if not selected_piece:  # If no piece was previously selected / highlighted
                 if grid.check_occup(square_clicked) and grid.color(square_clicked) == (

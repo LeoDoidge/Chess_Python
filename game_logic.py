@@ -2,7 +2,6 @@ import pygame
 from os import path
 from globals import *
 
-
 class Grid:
     grid = []
 
@@ -56,20 +55,18 @@ class Grid:
             self.grid[start_y][start_x] != "--"
             and self.grid[start_y][start_x][0] == self.grid[end_y][end_x][0]
         ):
-            # Highlight the selected piece with a green border
             pygame.draw.rect(
                 screen,
-                (0, 255, 0),  # Green color
+                (0, 255, 0),
                 (
                     (start_x * square_size),
                     (start_y * square_size),
                     square_size,
                     square_size,
                 ),
-                3,  # Border width
+                3,
             )
         elif self.grid[start_y][start_x][0] != self.grid[end_y][end_x][0]:
-            print(self.grid[end_y][end_x][0])
             return None
 
     def square_pos(self, pos):
@@ -82,90 +79,79 @@ class Grid:
         start_x, start_y = start_pos
         end_x, end_y = end_pos
         current_turn = "w" if game_clock % 2 == 0 else "b"
+        color = self.color(start_pos)
 
         if self.color(start_pos) != current_turn:
             return False
 
-        # Ensure the start position is valid
         if not (0 <= start_x < 8 and 0 <= start_y < 8):
             return False
 
-        # Ensure the end position is valid
         if not (0 <= end_x < 8 and 0 <= end_y < 8):
             return False
-
-        # Get the piece from the start position
+        
         piece = self.grid[start_y][start_x]
 
-        # Check if the end position is empty
         if self.grid[end_y][end_x] == "--":
-            # Move the piece to the end position and clear the start position
+
             self.grid[end_y][end_x] = piece
             self.grid[start_y][start_x] = "--"
             return True
 
-        return False  # Return False if the move is not valid
+        return False
 
     def eat_piece(self, start_pos, end_pos):
         start_x, start_y = start_pos
         end_x, end_y = end_pos
         type_piece = self.grid[start_y][start_x]
 
-        # Ensure the start position is valid
         if not (0 <= start_x < 8 and 0 <= start_y < 8):
             return False
 
-        # Ensure the end position is valid
         if not (0 <= end_x < 8 and 0 <= end_y < 8):
             return False
 
-        # Get the piece from the start position
         piece = self.grid[start_y][start_x]
 
-        # Check if the end position is not empty and has an opponent's piece
         if self.grid[end_y][end_x] != "--" and self.color(start_pos) != self.color(
             end_pos
         ):
-            # Capture the opponent's piece: move the piece to the end position and clear the start position
+
             self.grid[end_y][end_x] = piece
             self.grid[start_y][start_x] = "--"
             return True
 
-        return False  # Return False if the eat is not valid
+        return False
+
+
+grid = Grid()
 
 
 class Pieces:
-    def __init__(self) -> None:
-        None
-
-
-class Pawn(Pieces):
-    def __init__(self) -> None:
-        pass
+    def __init__(self):
+        self.board = grid.grid
 
     def PawnRank(self, square_pos):
         return square_pos[1]
 
-    def ValidMoves(self, start_pos, color):
+    def PawnValidMoves(self, start_pos, color):
         ValidMoveList = []
         x, y = start_pos
         if color == "b":
             y += 1
-            ValidMoveList.append((x, y))
+            ValidMoveList.append((y, x))
             if self.PawnRank(start_pos) == 1:
                 y += 1
-                ValidMoveList.append((x, y))
+                ValidMoveList.append((y, x))
         if color == "w":
             y -= 1
-            ValidMoveList.append((x, y))
+            ValidMoveList.append((y, x))
             if self.PawnRank(start_pos) == 6:
                 y -= 1
-                ValidMoveList.append((x, y))
+                ValidMoveList.append((y, x))
         return ValidMoveList
 
-
-class Knight(Pieces):
-    def ValidMoves(self, start_pos):
+    def KnightValidMoves(self, start_pos):
         x, y = start_pos
         ValidMovesList = []
         possible_moves = [
@@ -183,12 +169,10 @@ class Knight(Pieces):
             new_y = y + move[1]
 
             if 0 <= new_x < 8 and 0 <= new_y < 8:
-                ValidMovesList.append((new_x, new_y))
+                ValidMovesList.append((new_y, new_x))
         return ValidMovesList
 
-
-class Bishop(Pieces):
-    def ValidMoves(self, start_pos):
+    def BishopValidMoves(self, start_pos):
         x, y = start_pos
         ValidMovesList = []
         possible_moves = [(1, 1), (1, -1), (-1, 1), (-1, -1)]
@@ -197,12 +181,10 @@ class Bishop(Pieces):
                 new_x = x + move[0] * i
                 new_y = y + move[1] * i
                 if 0 <= new_x < 8 and 0 <= new_y < 8:
-                    ValidMovesList.append((new_x, new_y))
+                    ValidMovesList.append((new_y, new_x))
         return ValidMovesList
 
-
-class Rook(Pieces):
-    def ValidMoves(self, start_pos):
+    def RookValidMoves(self, start_pos):
         x, y = start_pos
         ValidMovesList = []
         possible_moves = [(0, 1), (0, -1), (-1, 0), (-1, -0)]
@@ -211,32 +193,119 @@ class Rook(Pieces):
                 new_x = x + move[0] * i
                 new_y = y + move[1] * i
                 if 0 <= new_x < 8 and 0 <= new_y < 8:
-                    ValidMovesList.append((new_x, new_y))
+                    ValidMovesList.append((new_y, new_x))
         return ValidMovesList
 
-
-class Queen(Pieces):
-    def ValidMoves(self, start_pos):
+    def QueenValidMoves(self, start_pos):
         x, y = start_pos
         ValidMovesList = []
-        possible_moves = [(0, 1), (0, -1), (-1, 0), (-1, -0),(1, 1), (1, -1), (-1, 1), (-1, -1)]
+        possible_moves = [
+            (0, 1),
+            (0, -1),
+            (-1, 0),
+            (-1, -0),
+            (1, 1),
+            (1, -1),
+            (-1, 1),
+            (-1, -1),
+        ]
         for move in possible_moves:
             for i in range(1, 8):
                 new_x = x + move[0] * i
                 new_y = y + move[1] * i
                 if 0 <= new_x < 8 and 0 <= new_y < 8:
-                    ValidMovesList.append((new_x, new_y))
+                    ValidMovesList.append((new_y, new_x))
         return ValidMovesList
 
-
-class King(Pieces):
-    def ValidMoves(self, start_pos):
+    def KingValidMoves(self, start_pos):
         x, y = start_pos
         ValidMovesList = []
-        possible_moves = [(0, 1), (0, -1), (-1, 0), (-1, -0),(1, 1), (1, -1), (-1, 1), (-1, -1)]
+        possible_moves = [
+            (0, 1),
+            (0, -1),
+            (-1, 0),
+            (-1, -0),
+            (1, 1),
+            (1, -1),
+            (-1, 1),
+            (-1, -1),
+        ]
         for move in possible_moves:
-            new_x = x + move[0] 
-            new_y = y + move[1] 
+            new_x = x + move[0]
+            new_y = y + move[1]
             if 0 <= new_x < 8 and 0 <= new_y < 8:
-                ValidMovesList.append((new_x, new_y))
+                ValidMovesList.append((new_y, new_x))
         return ValidMovesList
+
+    def Pawn_remove_blocked_moves(self, start_pos, color):
+        valid_move_list = self.PawnValidMoves(start_pos, color)
+        updated_move_list = []
+        for move in valid_move_list:
+            x, y = move
+            if self.board[y][x] == "--":
+                updated_move_list.append(move)
+            else:
+                break
+
+        return updated_move_list
+
+    def Knight_remove_blocked_moves(self, start_pos):
+        valid_move_list = self.KnightValidMoves(start_pos)
+        updated_move_list = []
+        for move in valid_move_list:
+            x, y = move
+            if self.board[y][x] == "--":
+                updated_move_list.append(move)
+            else:
+                break
+
+        return updated_move_list
+
+    def Bishop_remove_blocked_moves(self, start_pos):
+        valid_move_list = self.BishopValidMoves(start_pos)
+        updated_move_list = []
+        for move in valid_move_list:
+            x, y = move
+            if self.board[y][x] == "--":
+                updated_move_list.append(move)
+            else:
+                break
+
+        return updated_move_list
+
+    def Rook_remove_blocked_moves(self, start_pos):
+        valid_move_list = self.RookValidMoves(start_pos)
+        updated_move_list = []
+        for move in valid_move_list:
+            x, y = move
+            if self.board[y][x] == "--":
+                updated_move_list.append(move)
+            else:
+                break
+
+        return updated_move_list
+
+    def Queen_remove_blocked_moves(self, start_pos):
+        valid_move_list = self.QueenValidMoves(start_pos)
+        updated_move_list = []
+        for move in valid_move_list:
+            x, y = move
+            if self.board[y][x] == "--":
+                updated_move_list.append(move)
+            else:
+                break
+
+        return updated_move_list
+
+    def King_remove_blocked_moves(self, start_pos):
+        valid_move_list = self.KingValidMoves(start_pos)
+        updated_move_list = []
+        for move in valid_move_list:
+            x, y = move
+            if self.board[y][x] == "--":
+                updated_move_list.append(move)
+            else:
+                break
+
+        return updated_move_list
+
