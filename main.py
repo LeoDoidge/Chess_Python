@@ -1,21 +1,18 @@
-# Importing necessary libraries and modules
 import pygame
 import sys
 import game_logic
 from globals import *
 
-# Initializing pygame
 pygame.init()
 clock = pygame.time.Clock()
 
-# Creating the game grid
+
 grid = game_logic.Grid()
-pygame.display.set_caption("Chess Project")  # Setting window title
+pygame.display.set_caption("Chess Project")
 
-highlighted_pos = None  # Initializing highlighted position variable
+highlighted_pos = None
 
 
-# Function to draw the chessboard and pieces
 def draw_board():
     for row in range(board_size):
         for col in range(board_size):
@@ -53,14 +50,14 @@ while running:
             click_pos = pygame.mouse.get_pos()
             square_clicked = grid.square_pos(click_pos)
 
-            if not selected_piece:  # If no piece was previously selected / highlighted
+            if not selected_piece:
                 if grid.check_occup(square_clicked) and grid.color(square_clicked) == (
                     "w" if game_clock % 2 == 0 else "b"
                 ):
                     selected_piece = square_clicked
                 else:
                     print("It's not your turn!")
-            else:  # A piece was previously selected / highlighed
+            else:
                 move_made = False
                 if grid.check_occup(square_clicked):
                     if grid.color(square_clicked) != grid.color(selected_piece):
@@ -79,7 +76,7 @@ while running:
     screen.fill((0, 0, 0))
     draw_board()
 
-    if selected_piece:  # highlighting a piece if there should be one
+    if selected_piece:
         selected_piece_color = grid.color(selected_piece)
         grid.highlight(selected_piece, selected_piece)
 

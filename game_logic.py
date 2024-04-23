@@ -2,6 +2,7 @@ import pygame
 from os import path
 from globals import *
 
+
 class Grid:
     grid = []
 
@@ -89,7 +90,7 @@ class Grid:
 
         if not (0 <= end_x < 8 and 0 <= end_y < 8):
             return False
-        
+
         piece = self.grid[start_y][start_x]
 
         if self.grid[end_y][end_x] == "--":
@@ -103,7 +104,6 @@ class Grid:
     def eat_piece(self, start_pos, end_pos):
         start_x, start_y = start_pos
         end_x, end_y = end_pos
-        type_piece = self.grid[start_y][start_x]
 
         if not (0 <= start_x < 8 and 0 <= start_y < 8):
             return False
@@ -308,4 +308,3 @@ class Pieces:
                 break
 
         return updated_move_list
-
