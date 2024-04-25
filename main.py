@@ -12,20 +12,14 @@ clock = pygame.time.Clock()
 grid = grid.Grid()
 
 pygame.display.set_caption("Chess Project")  
-
 highlighted_pos = None  
-
-
-# Function to draw the chessboard and piec
-
-
 running = True
 selected_piece = None
 game_clock = 0
 successful_moves = 0
 square_clicked = None
 
-# Main game loop
+
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -40,11 +34,10 @@ while running:
                     "w" if game_clock % 2 == 0 else "b"
                 ):
                     selected_piece = square_clicked
+                elif helpers.type_piece(square_clicked) == "--":
+                    pass
                 else:
-                    if helpers.type_piece(square_clicked) == "--":
-                        pass
-                    else:
-                        print("It's not your turn!")
+                    print("It's not your turn!")
             else:  # A piece was previously selected / highlighed
                 move_made = False
                 if helpers.check_occup(square_clicked):
