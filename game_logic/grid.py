@@ -1,6 +1,6 @@
 import pygame 
 from utils import helpers
-import pieces
+
 
 class Grid:
     grid = []
