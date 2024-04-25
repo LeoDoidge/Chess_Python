@@ -8,7 +8,6 @@ def move_piece(start_pos, end_pos, game_clock):
         start_x, start_y = start_pos
         end_x, end_y = end_pos
         current_turn = "w" if game_clock % 2 == 0 else "b"
-        color = helpers.color(start_pos)
 
         if helpers.color(start_pos) != current_turn:
             return False

@@ -4,7 +4,7 @@ from settings import *
 from ui import board
 from utils import helpers
 from game_logic import grid
-from game_logic import game
+from game_logic import piece_movement
 
 
 pygame.init()
@@ -49,9 +49,9 @@ while running:
                 move_made = False
                 if helpers.check_occup(square_clicked):
                     if helpers.color(square_clicked) != helpers.color(selected_piece):
-                        move_made = game.eat_piece(selected_piece, square_clicked)
+                        move_made = piece_movement.eat_piece(selected_piece, square_clicked)
                 else:
-                    move_made = game.move_piece(
+                    move_made = piece_movement.move_piece(
                         selected_piece, square_clicked, game_clock
                     )
 
