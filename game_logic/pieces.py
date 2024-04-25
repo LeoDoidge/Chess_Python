@@ -1,6 +1,7 @@
 import pygame 
 from utils import helpers
 import grid
+grid = grid.Grid()
 
 class Pieces:
     def __init__(self):

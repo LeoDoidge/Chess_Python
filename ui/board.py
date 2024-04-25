@@ -26,6 +26,7 @@ def draw_board(highlighted_pos, square_clicked):
 
     if highlighted_pos is not None:
         grid.highlight(highlighted_pos, square_clicked)
+    
 
 
 def drawPiece( x, y, screen):
