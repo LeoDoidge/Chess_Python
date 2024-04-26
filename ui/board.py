@@ -6,6 +6,7 @@ from game_logic import grid
 
 grid = grid.Grid()
 
+
 def draw_board(highlighted_pos, square_clicked):
     for row in range(board_size):
         for col in range(board_size):
@@ -25,16 +26,15 @@ def draw_board(highlighted_pos, square_clicked):
             drawPiece(i, j, screen)
 
     if highlighted_pos is not None:
-        grid.highlight(highlighted_pos, square_clicked)
-    
+        highlight(highlighted_pos, square_clicked)
 
 
-def drawPiece( x, y, screen):
+def drawPiece(x, y, screen):
     name = grid.grid[y][x]
     if name == "--":
         pass
     else:
-        image = pygame.image.load(path.join("assets","images", name + ".png"))
+        image = pygame.image.load(path.join("assets", "images", name + ".png"))
         imagerect = image.get_rect()
         imagerect.left = (W - H) / 2 + x * H / 8
         imagerect.top = y * H / 8

@@ -3,21 +3,13 @@ import sys
 from settings import *
 from ui import board
 from utils import helpers
-from game_logic import grid
-from game_logic import piece_movement
+from game_logic import grid as grid_module, piece_movement
 
-
+pygame.display.set_caption("Chess Project")
 pygame.init()
-clock = pygame.time.Clock()
-grid = grid.Grid()
 
-pygame.display.set_caption("Chess Project")  
-highlighted_pos = None  
-running = True
-selected_piece = None
-game_clock = 0
-successful_moves = 0
-square_clicked = None
+clock = pygame.time.Clock()
+grid = grid_module.Grid()
 
 
 while running:
@@ -29,20 +21,22 @@ while running:
             click_pos = pygame.mouse.get_pos()
             square_clicked = helpers.square_pos(click_pos)
 
-            if not selected_piece:  # If no piece was previously selected / highlighted
-                if helpers.check_occup(square_clicked) and helpers.color(square_clicked) == (
-                    "w" if game_clock % 2 == 0 else "b"
-                ):
+            if not selected_piece:
+                if helpers.check_occup(square_clicked) and helpers.color(
+                    square_clicked
+                ) == ("w" if game_clock % 2 == 0 else "b"):
                     selected_piece = square_clicked
                 elif helpers.type_piece(square_clicked) == "--":
                     pass
                 else:
                     print("It's not your turn!")
-            else:  # A piece was previously selected / highlighed
+            else:
                 move_made = False
                 if helpers.check_occup(square_clicked):
                     if helpers.color(square_clicked) != helpers.color(selected_piece):
-                        move_made = piece_movement.eat_piece(selected_piece, square_clicked)
+                        move_made = piece_movement.eat_piece(
+                            selected_piece, square_clicked
+                        )
                 else:
                     move_made = piece_movement.move_piece(
                         selected_piece, square_clicked, game_clock
@@ -57,7 +51,7 @@ while running:
     screen.fill((0, 0, 0))
     board.draw_board(highlighted_pos, square_clicked)
 
-    if selected_piece:  # highlighting a piece if there should be one
+    if selected_piece:
         selected_piece_color = helpers.color(selected_piece)
         board.highlight(selected_piece, selected_piece)
 
