@@ -49,7 +49,7 @@ while running:
                     selected_piece = None
                     print("Invalid move!")
     screen.fill((0, 0, 0))
-    board.draw_board(highlighted_pos, square_clicked)
+    board.draw_board(None, square_clicked)
 
     if selected_piece:
         selected_piece_color = helpers.color(selected_piece)
