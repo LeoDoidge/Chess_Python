@@ -3,13 +3,12 @@ import sys
 from settings import *
 from ui import board
 from utils import helpers
-from game_logic import grid as grid_module, piece_movement
+from game_logic import  piece_movement
 
 pygame.display.set_caption("Chess Project")
 pygame.init()
 
 clock = pygame.time.Clock()
-grid = grid_module.Grid()
 
 
 while running:

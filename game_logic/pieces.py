@@ -1,11 +1,10 @@
-import pygame 
-from utils import helpers
-import grid
-grid = grid.Grid()
+import pygame   
+from ui import board
+
 
 class Pieces:
     def __init__(self):
-        self.board = grid.grid
+        self.board = board.Grid.grid
 
     def PawnRank(self, square_pos):
         return square_pos[1]
@@ -45,7 +44,7 @@ class Pieces:
             new_y = y + move[1]
 
             if 0 <= new_x < 8 and 0 <= new_y < 8:
-                ValidMovesList.append((new_y, new_x))
+                ValidMovesList.append((new_x, new_y))
         return ValidMovesList
 
     def BishopValidMoves(self, start_pos):
@@ -57,7 +56,7 @@ class Pieces:
                 new_x = x + move[0] * i
                 new_y = y + move[1] * i
                 if 0 <= new_x < 8 and 0 <= new_y < 8:
-                    ValidMovesList.append((new_y, new_x))
+                    ValidMovesList.append((new_x, new_y))
         return ValidMovesList
 
     def RookValidMoves(self, start_pos):
@@ -69,7 +68,7 @@ class Pieces:
                 new_x = x + move[0] * i
                 new_y = y + move[1] * i
                 if 0 <= new_x < 8 and 0 <= new_y < 8:
-                    ValidMovesList.append((new_y, new_x))
+                    ValidMovesList.append((new_x, new_y))
         return ValidMovesList
 
     def QueenValidMoves(self, start_pos):
@@ -90,7 +89,7 @@ class Pieces:
                 new_x = x + move[0] * i
                 new_y = y + move[1] * i
                 if 0 <= new_x < 8 and 0 <= new_y < 8:
-                    ValidMovesList.append((new_y, new_x))
+                    ValidMovesList.append((new_x, new_y))
         return ValidMovesList
 
     def KingValidMoves(self, start_pos):
@@ -100,7 +99,7 @@ class Pieces:
             (0, 1),
             (0, -1),
             (-1, 0),
-            (-1, -0),
+            (1, 0),
             (1, 1),
             (1, -1),
             (-1, 1),
@@ -110,7 +109,7 @@ class Pieces:
             new_x = x + move[0]
             new_y = y + move[1]
             if 0 <= new_x < 8 and 0 <= new_y < 8:
-                ValidMovesList.append((new_y, new_x))
+                ValidMovesList.append((new_x, new_y))
         return ValidMovesList
 
     def Pawn_remove_blocked_moves(self, start_pos, color):
@@ -181,6 +180,6 @@ class Pieces:
             if self.board[y][x] == "--":
                 updated_move_list.append(move)
             else:
-                break
+                pass
 
         return updated_move_list

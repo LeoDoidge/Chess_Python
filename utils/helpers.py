@@ -1,28 +1,28 @@
 import pygame
 from settings import *
-from game_logic import grid
 
-grid= grid.Grid()
+from ui import board 
+
 
 
 def color(square_clicked):
     if square_clicked == None:
         return None
     x, y = square_clicked
-    piece = grid.grid[y][x]
+    piece = board.Grid.grid[y][x]
     return piece[0]
 
 
 def type_piece(square_clicked):
     x, y = square_clicked
-    return grid.grid[y][x]
+    return board.Grid.grid[y][x]
 
 
 def check_occup(square_pos):
     for i in range(8):
         for j in range(8):
             if square_pos == (i, j):
-                if grid.grid[j][i] == "--":
+                if board.Grid.grid[j][i] == "--":
                     return False
                 else:
                     return True
