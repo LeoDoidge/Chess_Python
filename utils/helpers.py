@@ -1,8 +1,11 @@
 import pygame
 from settings import *
 
-from ui import board 
+from ui import board
 
+
+def merger(list):
+    return list[0] + list[1]
 
 
 def color(square_clicked):
