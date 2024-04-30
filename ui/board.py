@@ -4,7 +4,6 @@ from settings import *
 from utils import helpers
 from pprint import pprint
 
-
 class Grid:
     grid = [["bR", "bN", "bB", "bQ", "bK", "bB", "bN", "bR"],
             ["bp", "bp", "bp", "bp", "bp", "bp", "bp", "bp"],
@@ -52,6 +51,7 @@ def highlight(start_pos, end_pos):
         )
     elif Grid.grid[start_y][start_x][0] != Grid.grid[end_y][end_x][0]:
         return None
+    
 
 def draw_board(highlighted_pos, square_clicked):
     for row in range(8):

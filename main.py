@@ -3,7 +3,7 @@ import sys
 from settings import *
 from ui import board
 from utils import helpers
-from game_logic import  piece_movement
+from game_logic import piece_movement
 
 pygame.display.set_caption("Chess Project")
 pygame.init()
@@ -40,7 +40,6 @@ while running:
                     move_made = piece_movement.move_piece(
                         selected_piece, square_clicked, game_clock
                     )
-
                 if move_made:
                     game_clock += 1
                     selected_piece = None
@@ -53,7 +52,6 @@ while running:
     if selected_piece:
         selected_piece_color = helpers.color(selected_piece)
         board.highlight(selected_piece, selected_piece)
-
     pygame.display.update()
     clock.tick(10)
 
