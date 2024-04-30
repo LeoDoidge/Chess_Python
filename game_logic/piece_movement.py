@@ -36,7 +36,7 @@ def move_piece(start_pos, end_pos, game_clock):
 
         board.Grid.grid[end_y][end_x] = piece
         board.Grid.grid[start_y][start_x] = "--"
-        print (Legal_Moves_Dict["wR"](end_pos))
+        print (Legal_Moves_Dict["wB"](end_pos))
         return True
 
     return False

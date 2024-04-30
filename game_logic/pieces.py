@@ -49,14 +49,18 @@ class Pieces:
 
     def BishopValidMoves(self, start_pos):
         x, y = start_pos
-        ValidMovesList = []
+        ValidMovesList = [[],[],[],[]]
         possible_moves = [(1, 1), (1, -1), (-1, 1), (-1, -1)]
+        axis = 0
         for move in possible_moves:
             for i in range(1, 8):
                 new_x = x + move[0] * i
                 new_y = y + move[1] * i
                 if 0 <= new_x < 8 and 0 <= new_y < 8:
-                    ValidMovesList.append((new_x, new_y))
+                    ValidMovesList[axis].append((new_x, new_y))
+                else:
+                    break
+            axis += 1
         return ValidMovesList
 
     def RookValidMoves(self, start_pos):
@@ -144,12 +148,13 @@ class Pieces:
     def Bishop_remove_blocked_moves(self, start_pos):
         valid_move_list = self.BishopValidMoves(start_pos)
         updated_move_list = []
-        for move in valid_move_list:
-            x, y = move
-            if self.board[y][x] == "--":
-                updated_move_list.append(move)
-            else:
-                break
+        for axis_list in valid_move_list:
+            for move in axis_list:
+                x, y = move
+                if self.board[y][x] == "--":
+                    updated_move_list.append(move)
+                else:
+                    break       
 
         return updated_move_list
 
@@ -158,7 +163,6 @@ class Pieces:
         updated_move_list = []
         for axis_list in valid_move_list:
             for move in axis_list:
-                print(move)
                 x, y = move
                 if self.board[y][x] == "--":
                     updated_move_list.append(move)
