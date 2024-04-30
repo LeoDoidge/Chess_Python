@@ -121,7 +121,7 @@ class Pieces:
             if self.board[y][x] == "--":
                 updated_move_list.append(move)
             else:
-                break
+                pass
 
         return updated_move_list
 
