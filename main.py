@@ -11,6 +11,7 @@ pygame.init()
 clock = pygame.time.Clock()
 
 
+
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -40,6 +41,7 @@ while running:
                     move_made = piece_movement.move_piece(
                         selected_piece, square_clicked, game_clock
                     )
+
                 if move_made:
                     game_clock += 1
                     selected_piece = None
@@ -52,6 +54,7 @@ while running:
     if selected_piece:
         selected_piece_color = helpers.color(selected_piece)
         board.highlight(selected_piece, selected_piece)
+
     pygame.display.update()
     clock.tick(10)
 
