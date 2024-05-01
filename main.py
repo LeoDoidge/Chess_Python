@@ -1,63 +1,62 @@
-import pygame
 import sys
-from settings import *
+import pygame
+from settings import GAME_CLOCK, screen, RUNNING, SELECTED_PIECE
 from ui import board
 from utils import helpers
 from game_logic import piece_movement
 
 pygame.display.set_caption("Chess Project")
-pygame.init()
+
 
 clock = pygame.time.Clock()
 
 
 
-while running:
+while RUNNING:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            running = False
+            RUNNING = False
 
         elif event.type == pygame.MOUSEBUTTONDOWN:
             click_pos = pygame.mouse.get_pos()
-            square_clicked = helpers.square_pos(click_pos)
+            SQUARE_CLICKED = helpers.SquarePos(click_pos)
 
-            if not selected_piece:
-                if helpers.check_occup(square_clicked) and helpers.color(
-                    square_clicked
-                ) == ("w" if game_clock % 2 == 0 else "b"):
-                    selected_piece = square_clicked
-                elif helpers.type_piece(square_clicked) == "--":
+            if not SELECTED_PIECE:
+                if helpers.CheckOccup(SQUARE_CLICKED) and helpers.Color(
+                    SQUARE_CLICKED
+                ) == ("w" if GAME_CLOCK % 2 == 0 else "b"):
+                    SELECTED_PIECE = SQUARE_CLICKED
+                elif helpers.TypePiece(SQUARE_CLICKED) == "--":
                     pass
                 else:
                     print("It's not your turn!")
             else:
-                move_made = False
-                if helpers.check_occup(square_clicked):
-                    if helpers.color(square_clicked) != helpers.color(selected_piece):
-                        move_made = piece_movement.eat_piece(
-                            selected_piece, square_clicked
+                MOVE_MADE = False
+                if helpers.CheckOccup(SQUARE_CLICKED):
+                    if helpers.Color(SQUARE_CLICKED) != helpers.Color(SELECTED_PIECE):
+                        MOVE_MADE = piece_movement.EatPiece(
+                            SELECTED_PIECE, SQUARE_CLICKED
                         )
                 else:
-                    move_made = piece_movement.move_piece(
-                        selected_piece, square_clicked, game_clock
+                    MOVE_MADE = piece_movement.MovePiece(
+                        SELECTED_PIECE, SQUARE_CLICKED, GAME_CLOCK
                     )
 
-                if move_made:
-                    game_clock += 1
-                    selected_piece = None
+                if MOVE_MADE:
+                    GAME_CLOCK += 1
+                    SELECTED_PIECE = None
                 else:
-                    selected_piece = None
+                    SELECTED_PIECE = None
                     print("Invalid move!")
     screen.fill((0, 0, 0))
-    board.draw_board(None, square_clicked)
+    board.DrawBoard(None, SQUARE_CLICKED)
 
-    if selected_piece:
-        selected_piece_color = helpers.color(selected_piece)
-        board.highlight(selected_piece, selected_piece)
+    if SELECTED_PIECE:
+        selected_piece_color = helpers.Color(SELECTED_PIECE)
+        board.Highlight(SELECTED_PIECE, SELECTED_PIECE)
 
     pygame.display.update()
     clock.tick(10)
 
 
-pygame.quit()
 sys.exit()

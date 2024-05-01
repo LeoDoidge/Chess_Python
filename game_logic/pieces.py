@@ -1,4 +1,3 @@
-import pygame
 from ui import board
 from utils import helpers
 
@@ -10,90 +9,9 @@ class Pieces:
     def PawnRank(self, square_pos):
         return square_pos[1]
 
-    def BlackPawnValidMoves(self, start_pos):
-        ValidMoveList = []
-        x, y = start_pos
-        if y == 1:
-            new_y1 = y + 1
-            new_y2 = y + 2
-            ValidMoveList.append((x, new_y1))
-            ValidMoveList.append((x, new_y2))
-        else:
-            new_y1 = y + 1
-            ValidMoveList.append((x, new_y1))
-        return ValidMoveList
-
-    def WhitePawnValidMoves(self, start_pos):
-        ValidMoveList = []
-        x, y = start_pos
-        if y == 6:
-            new_y1 = y - 1
-            new_y2 = y - 2
-            ValidMoveList.append((x, new_y1))
-            ValidMoveList.append((x, new_y2))
-        else:
-            new_y1 = y - 1
-            ValidMoveList.append((x, new_y1))
-
-        return ValidMoveList
-
-    def KnightValidMoves(self, start_pos):
-        x, y = start_pos
-        ValidMovesList = []
-        possible_moves = [
-            (2, 1),
-            (2, -1),
-            (-2, 1),
-            (-2, -1),
-            (1, 2),
-            (1, -2),
-            (-1, 2),
-            (-1, -2),
-        ]
-        for move in possible_moves:
-            new_x = x + move[0]
-            new_y = y + move[1]
-
-            if 0 <= new_x < 8 and 0 <= new_y < 8:
-                ValidMovesList.append((new_x, new_y))
-        return ValidMovesList
-
-    def BishopValidMoves(self, start_pos):
-        x, y = start_pos
-        ValidMovesList = [[], [], [], []]
-        possible_moves = [(1, 1), (1, -1), (-1, 1), (-1, -1)]
-        axis = 0
-        for move in possible_moves:
-            for i in range(1, 8):
-                new_x = x + move[0] * i
-                new_y = y + move[1] * i
-                if 0 <= new_x < 8 and 0 <= new_y < 8:
-                    ValidMovesList[axis].append((new_x, new_y))
-                else:
-                    break
-            axis += 1
-        return ValidMovesList
-
-    def RookValidMoves(self, start_pos):
-        x, y = start_pos
-        ValidMovesList = [[], [], [], []]
-        possible_moves = [(0, 1), (0, -1), (-1, 0), (1, 0)]
-        axis = 0
-        for move in possible_moves:
-            for i in range(1, 8):
-                new_x = x + move[0] * i
-                new_y = y + move[1] * i
-                if 0 <= new_x < 8 and 0 <= new_y < 8:
-                    ValidMovesList[axis].append((new_x, new_y))
-                else:
-                    break
-            axis += 1
-
-        return ValidMovesList
-
-    def KingValidMoves(self, start_pos):
-        x, y = start_pos
-        ValidMovesList = []
+    def KingLegalMoves(self, start_pos):
+        total_moves = []
+        legal_moves = []
         possible_moves = [
             (0, 1),
             (0, -1),
@@ -104,88 +22,188 @@ class Pieces:
             (-1, 1),
             (-1, -1),
         ]
+        x, y = start_pos
         for move in possible_moves:
             new_x = x + move[0]
             new_y = y + move[1]
             if 0 <= new_x < 8 and 0 <= new_y < 8:
-                ValidMovesList.append((new_x, new_y))
-        return ValidMovesList
+                total_moves.append((new_x, new_y))
+        for move in total_moves:
+            x, y = move
+            if self.board[y][x] == "--":
+                legal_moves.append(move)
+            else:
+                pass
+        return legal_moves
 
-    def Pawn_remove_blocked_moves(self, start_pos):
-        color = helpers.color(start_pos)
+    def QueenLegalMoves(self, start_pos):
+        legal_moves = []
+        legal_moves.append(self.BishopLegalMoves(start_pos))
+        legal_moves.append(self.RookLegalMoves(start_pos))
+        return helpers.ListMerger(legal_moves)
+
+    def RookLegalMoves(self, start_pos):
+        total_moves = [[], [], [], []]
+        legal_moves = []
+        x, y = start_pos
+        possible_moves = [(0, 1), (0, -1), (-1, 0), (1, 0)]
+        axis = 0
+        for move in possible_moves:
+            for i in range(1, 8):
+                new_x = x + move[0] * i
+                new_y = y + move[1] * i
+                if 0 <= new_x < 8 and 0 <= new_y < 8:
+                    total_moves[axis].append((new_x, new_y))
+                else:
+                    break
+            axis += 1
+        for axis_list in total_moves:
+            for move in axis_list:
+                x, y = move
+                if self.board[y][x] == "--":
+                    legal_moves.append(move)
+                else:
+                    break
+
+        return legal_moves
+
+    def BishopLegalMoves(self, start_pos):
+        total_moves = [[], [], [], []]
+        legal_moves = []
+        x, y = start_pos
+        possible_moves = [(1, 1), (1, -1), (-1, 1), (-1, -1)]
+        axis = 0
+        for move in possible_moves:
+            for i in range(1, 8):
+                new_x = x + move[0] * i
+                new_y = y + move[1] * i
+                if 0 <= new_x < 8 and 0 <= new_y < 8:
+                    total_moves[axis].append((new_x, new_y))
+                else:
+                    break
+            axis += 1
+        for axis_list in total_moves:
+            for move in axis_list:
+                x, y = move
+                if self.board[y][x] == "--":
+                    legal_moves.append(move)
+                else:
+                    break
+        return legal_moves
+
+    def PawnLegalMoves(self, start_pos):
+        total_moves = []
+        legal_moves = []
+        color = helpers.Color(start_pos)
+        x, y = start_pos
+        if color == "b":
+            if y == 1:
+                total_moves.append((x, y + 1))
+                total_moves.append((x, y + 2))
+                helpers.ListMerger(total_moves)
+            else:
+                total_moves.append((x, y + 1))
+            for move in total_moves:
+
+                x, y = move
+                if self.board[y][x] == "--":
+                    legal_moves.append(move)
+                else:
+                    break
         if color == "w":
-            valid_move_list = self.WhitePawnValidMoves(start_pos)
-        else:
-            valid_move_list = self.BlackPawnValidMoves(start_pos)
-        updated_move_list = []
-        for move in valid_move_list:
-            x, y = move
-            if self.board[y][x] == "--":
-                updated_move_list.append(move)
+            if y == 6:
+                total_moves.append((x, y - 1))
+                total_moves.append((x, y - 2))
+                helpers.ListMerger(total_moves)
             else:
-                break
+                total_moves.append((x, y - 1))
+            for move in total_moves:
 
-        return updated_move_list
-
-    def Knight_remove_blocked_moves(self, start_pos):
-        valid_move_list = self.KnightValidMoves(start_pos)
-        updated_move_list = []
-        for move in valid_move_list:
-            x, y = move
-            if self.board[y][x] == "--":
-                updated_move_list.append(move)
-            else:
-                pass
-
-        return updated_move_list
-
-    def Bishop_remove_blocked_moves(self, start_pos):
-        valid_move_list = self.BishopValidMoves(start_pos)
-        updated_move_list = []
-        for axis_list in valid_move_list:
-            for move in axis_list:
                 x, y = move
                 if self.board[y][x] == "--":
-                    updated_move_list.append(move)
+                    legal_moves.append(move)
                 else:
                     break
+        return legal_moves
 
-        return updated_move_list
-
-    def Rook_remove_blocked_moves(self, start_pos):
-        valid_move_list = self.RookValidMoves(start_pos)
-        updated_move_list = []
-        for axis_list in valid_move_list:
-            for move in axis_list:
-                x, y = move
-                if self.board[y][x] == "--":
-                    updated_move_list.append(move)
-                else:
-                    break
-        return updated_move_list
-
-    def Queen_remove_blocked_moves(self, start_pos):
-        updated_move_list = []
-        updated_move_list.append(self.Rook_remove_blocked_moves(start_pos))
-        updated_move_list.append(self.Bishop_remove_blocked_moves(start_pos))
-        return helpers.merger(updated_move_list)
-
-    def King_remove_blocked_moves(self, start_pos):
-        valid_move_list = self.KingValidMoves(start_pos)
-        updated_move_list = []
-        for move in valid_move_list:
+    def KnightLegalMoves(self, start_pos):
+        total_moves = []
+        legal_moves = []
+        possible_moves = [
+            (2, 1),
+            (2, -1),
+            (-2, 1),
+            (-2, -1),
+            (1, 2),
+            (1, -2),
+            (-1, 2),
+            (-1, -2),
+        ]
+        x, y = start_pos
+        for move in possible_moves:
+            new_x = x + move[0]
+            new_y = y + move[1]
+            if 0 <= new_x < 8 and 0 <= new_y < 8:
+                total_moves.append((new_x, new_y))
+        for move in total_moves:
             x, y = move
             if self.board[y][x] == "--":
-                updated_move_list.append(move)
+                legal_moves.append(move)
             else:
                 pass
+        return legal_moves
 
-        return updated_move_list
+    def KnightEat(self, start_pos):
+        legal_eat = []
+        possible_moves = [
+            (2, 1),
+            (2, -1),
+            (-2, 1),
+            (-2, -1),
+            (1, 2),
+            (1, -2),
+            (-1, 2),
+            (-1, -2),
+        ]
+        x, y = start_pos
+        for move in possible_moves:
+            new_x = x + move[0]
+            new_y = y + move[1]
+            if 0 <= new_x < 8 and 0 <= new_y < 8:
+                if self.board[y][x] != "--":
+                    legal_eat.append((new_x, new_y))
+        return legal_eat
 
-    def PawnEat(self, start_pos):
+    def BishopEats(self, start_pos):
+        legal_eats = []
+        x, y = start_pos
+        possible_moves = [(1, 1), (1, -1), (-1, 1), (-1, -1)]
+        for move in possible_moves:
+            for i in range(1, 8):
+                new_x = x + move[0] * i
+                new_y = y + move[1] * i
+                if 0 <= new_x < 8 and 0 <= new_y < 8:
+                    if self.board[y][x] != "--":
+                        legal_eats.append((new_x, new_y))
+        return legal_eats
+
+    def RookEats(self, start_pos):
+        legal_eats = []
+        x, y = start_pos
+        possible_moves = [(0, 1), (0, -1), (-1, 0), (1, 0)]
+        for move in possible_moves:
+            for i in range(1, 8):
+                new_x = x + move[0] * i
+                new_y = y + move[1] * i
+                if 0 <= new_x < 8 and 0 <= new_y < 8:
+                    if self.board[y][x] != "--":
+                        legal_eats.append((new_x, new_y))
+        return legal_eats
+
+    def PawnEats(self, start_pos):
         x, y = start_pos
         valid_eat_list = []
-        color = helpers.color(start_pos)
+        color = helpers.Color(start_pos)
         x1 = x + 1
         x2 = x - 1
         if color == "w":
@@ -197,3 +215,30 @@ class Pieces:
             valid_eat_list.append((x1, new_y))
             valid_eat_list.append((x2, new_y))
         return valid_eat_list
+
+    def KingEats(self, start_pos):
+        legal_eats = []
+        possible_moves = [
+            (0, 1),
+            (0, -1),
+            (-1, 0),
+            (1, 0),
+            (1, 1),
+            (1, -1),
+            (-1, 1),
+            (-1, -1),
+        ]
+        x, y = start_pos
+        for move in possible_moves:
+            new_x = x + move[0]
+            new_y = y + move[1]
+            if 0 <= new_x < 8 and 0 <= new_y < 8:
+                if self.board[y][x] != "--":
+                    legal_eats.append((new_x, new_y))
+        return legal_eats
+
+    def QueenEats(self, start_pos):
+        legal_eats = []
+        legal_eats.append(self.RookEats(start_pos))
+        legal_eats.append(self.BishopEats(start_pos))
+        return helpers.ListMerger(legal_eats)
