@@ -111,7 +111,8 @@ class Pieces:
                 ValidMovesList.append((new_x, new_y))
         return ValidMovesList
 
-    def Pawn_remove_blocked_moves(self, start_pos, color):
+    def Pawn_remove_blocked_moves(self, start_pos):
+        color = helpers.color(start_pos)
         if color == "w":
             valid_move_list = self.WhitePawnValidMoves(start_pos)
         else:
@@ -126,7 +127,7 @@ class Pieces:
 
         return updated_move_list
 
-    def Knight_remove_blocked_moves(self, start_pos, color):
+    def Knight_remove_blocked_moves(self, start_pos):
         valid_move_list = self.KnightValidMoves(start_pos)
         updated_move_list = []
         for move in valid_move_list:
@@ -138,7 +139,7 @@ class Pieces:
 
         return updated_move_list
 
-    def Bishop_remove_blocked_moves(self, start_pos, color):
+    def Bishop_remove_blocked_moves(self, start_pos):
         valid_move_list = self.BishopValidMoves(start_pos)
         updated_move_list = []
         for axis_list in valid_move_list:
@@ -151,7 +152,7 @@ class Pieces:
 
         return updated_move_list
 
-    def Rook_remove_blocked_moves(self, start_pos, color):
+    def Rook_remove_blocked_moves(self, start_pos):
         valid_move_list = self.RookValidMoves(start_pos)
         updated_move_list = []
         for axis_list in valid_move_list:
@@ -163,13 +164,13 @@ class Pieces:
                     break
         return updated_move_list
 
-    def Queen_remove_blocked_moves(self, start_pos, color):
+    def Queen_remove_blocked_moves(self, start_pos):
         updated_move_list = []
         updated_move_list.append(self.Rook_remove_blocked_moves(start_pos))
         updated_move_list.append(self.Bishop_remove_blocked_moves(start_pos))
         return helpers.merger(updated_move_list)
 
-    def King_remove_blocked_moves(self, start_pos, color):
+    def King_remove_blocked_moves(self, start_pos):
         valid_move_list = self.KingValidMoves(start_pos)
         updated_move_list = []
         for move in valid_move_list:
@@ -180,3 +181,19 @@ class Pieces:
                 pass
 
         return updated_move_list
+
+    def PawnEat(self, start_pos):
+        x, y = start_pos
+        valid_eat_list = []
+        color = helpers.color(start_pos)
+        x1 = x + 1
+        x2 = x - 1
+        if color == "w":
+            new_y = y - 1
+            valid_eat_list.append((x1, new_y))
+            valid_eat_list.append((x2, new_y))
+        else:
+            new_y = y + 1
+            valid_eat_list.append((x1, new_y))
+            valid_eat_list.append((x2, new_y))
+        return valid_eat_list
