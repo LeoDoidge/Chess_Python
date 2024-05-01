@@ -1,3 +1,7 @@
+'''
+This module handles all global variables
+'''
+
 import pygame
 
 H = 500

@@ -1,5 +1,5 @@
 '''
-This module handles
+This module handles all piece movement
 '''
 
 from utils import helpers

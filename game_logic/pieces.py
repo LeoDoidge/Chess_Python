@@ -1,3 +1,7 @@
+'''
+This module handles all calculation of legal moves
+'''
+
 from ui import board
 from utils import helpers
 
