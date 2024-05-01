@@ -1,4 +1,3 @@
-import pygame
 from settings import *
 
 from ui import board
