@@ -1,0 +1,12 @@
+[BASIC]
+
+function-naming-style=PascalCase
+variable-naming-style=snake_case
+class-naming-style=PascalCase
+method-naming-style=PascalCase
+
+[MASTER]
+disable=
+    C0114, # missing-module-docstring
+    C0115, # missing-class-docstring
+    C0116, # missing-function-docstring

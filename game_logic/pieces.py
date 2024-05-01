@@ -40,7 +40,7 @@ class Pieces:
         legal_moves = []
         legal_moves.append(self.BishopLegalMoves(start_pos))
         legal_moves.append(self.RookLegalMoves(start_pos))
-        return helpers.merger(legal_moves)
+        return helpers.ListMerger(legal_moves)
 
     def RookLegalMoves(self, start_pos):
         total_moves = [[], [], [], []]
@@ -94,13 +94,13 @@ class Pieces:
     def PawnLegalMoves(self, start_pos):
         total_moves = []
         legal_moves = []
-        color = helpers.color(start_pos)
+        color = helpers.Color(start_pos)
         x, y = start_pos
         if color == "b":
             if y == 1:
                 total_moves.append((x, y + 1))
                 total_moves.append((x, y + 2))
-                helpers.merger(total_moves)
+                helpers.ListMerger(total_moves)
             else:
                 total_moves.append((x, y + 1))
             for move in total_moves:
@@ -114,7 +114,7 @@ class Pieces:
             if y == 6:
                 total_moves.append((x, y - 1))
                 total_moves.append((x, y - 2))
-                helpers.merger(total_moves)
+                helpers.ListMerger(total_moves)
             else:
                 total_moves.append((x, y - 1))
             for move in total_moves:
@@ -203,7 +203,7 @@ class Pieces:
     def PawnEats(self, start_pos):
         x, y = start_pos
         valid_eat_list = []
-        color = helpers.color(start_pos)
+        color = helpers.Color(start_pos)
         x1 = x + 1
         x2 = x - 1
         if color == "w":
@@ -241,4 +241,4 @@ class Pieces:
         legal_eats = []
         legal_eats.append(self.RookEats(start_pos))
         legal_eats.append(self.BishopEats(start_pos))
-        return helpers.merger(legal_eats)
+        return helpers.ListMerger(legal_eats)

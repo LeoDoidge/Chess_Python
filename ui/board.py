@@ -1,8 +1,6 @@
-import pygame
 from os import path
-from settings import *
-from utils import helpers
-from pprint import pprint
+import pygame
+from settings import W, H, screen, SQUARE_SIZE
 
 class Grid:
     grid = [["bR", "bN", "bB", "bQ", "bK", "bB", "bN", "bR"],
@@ -19,7 +17,7 @@ class Grid:
         pass
 
 
-def drawPiece(x, y, screen):
+def DrawPiece(x, y, game):
     if 0 <= x < 8 and 0 <= y < 8:  # Check if x and y are within the valid range
         name = Grid.grid[y][x]
         if name == "--":
@@ -29,9 +27,9 @@ def drawPiece(x, y, screen):
             imagerect = image.get_rect()
             imagerect.left = (W - H) / 2 + x * H / 8
             imagerect.top = y * H / 8
-            screen.blit(image, imagerect)
+            game.blit(image, imagerect)
 
-def highlight(start_pos, end_pos):
+def Highlight(start_pos, end_pos):
     start_x, start_y = start_pos
     end_x, end_y = end_pos
     if (
@@ -42,34 +40,33 @@ def highlight(start_pos, end_pos):
             screen,
             (0, 255, 0),
             (
-                (start_x * square_size),
-                (start_y * square_size),
-                square_size,
-                square_size,
+                (start_x * SQUARE_SIZE),
+                (start_y * SQUARE_SIZE),
+                SQUARE_SIZE,
+                SQUARE_SIZE,
             ),
             3,
         )
     elif Grid.grid[start_y][start_x][0] != Grid.grid[end_y][end_x][0]:
         return None
-    
 
-def draw_board(highlighted_pos, square_clicked):
+def DrawBoard(highlighted_pos, square_clicked):
     for row in range(8):
         for col in range(8):
-            x = col * square_size
-            y = row * square_size
+            x = col * SQUARE_SIZE
+            y = row * SQUARE_SIZE
             if (row + col) % 2 == 0:
                 pygame.draw.rect(
-                    screen, (255, 255, 255), (x, y, square_size, square_size)
+                    screen, (255, 255, 255), (x, y, SQUARE_SIZE, SQUARE_SIZE)
                 )
             else:
                 pygame.draw.rect(
-                    screen, (150, 150, 150), (x, y, square_size, square_size)
+                    screen, (150, 150, 150), (x, y, SQUARE_SIZE, SQUARE_SIZE)
                 )
 
     for i in range(8):
         for j in range(8):
-            drawPiece(i, j, screen)
+            DrawPiece(i, j, screen)
 
     if highlighted_pos is not None:
-        highlight(highlighted_pos, square_clicked)
+        Highlight(highlighted_pos, square_clicked)

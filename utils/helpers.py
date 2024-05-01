@@ -1,36 +1,35 @@
-from settings import *
+from settings import H
 
 from ui import board
 
 
-def merger(list):
-    return list[0] + list[1]
+def ListMerger(item):
+    return item[0] + item[1]
 
 
-def color(square_clicked):
-    if square_clicked == None:
+def Color(clicked_pos):
+    if clicked_pos is not None:
         return None
-    x, y = square_clicked
+    x, y = clicked_pos
     piece = board.Grid.grid[y][x]
     return piece[0]
 
 
-def type_piece(square_clicked):
-    x, y = square_clicked
+def TypePiece(clicked_pos):
+    x, y = clicked_pos
     return board.Grid.grid[y][x]
 
 
-def check_occup(square_pos):
+def CheckOccup(square_pos):
     for i in range(8):
         for j in range(8):
             if square_pos == (i, j):
                 if board.Grid.grid[j][i] == "--":
                     return False
-                else:
-                    return True
+    return True
 
 
-def square_pos(pos):
+def SquarePos(pos):
     x = pos[0]
     y = pos[1]
     square_pos = (int(x / H * 8), int(y / H * 8))
