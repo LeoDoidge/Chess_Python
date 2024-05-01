@@ -1,6 +1,6 @@
 import sys
 import pygame
-from settings import GAME_CLOCK, screen, RUNNING, SELECTED_PIECE
+from settings import *
 from ui import board
 from utils import helpers
 from game_logic import piece_movement
@@ -9,7 +9,6 @@ pygame.display.set_caption("Chess Project")
 
 
 clock = pygame.time.Clock()
-
 
 
 while RUNNING:
