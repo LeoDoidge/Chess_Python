@@ -8,7 +8,7 @@ def ListMerger(item):
 
 
 def Color(clicked_pos):
-    if clicked_pos is not None:
+    if clicked_pos is None:
         return None
     x, y = clicked_pos
     piece = board.Grid.grid[y][x]

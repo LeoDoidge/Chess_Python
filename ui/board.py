@@ -1,6 +1,6 @@
 from os import path
 import pygame
-from settings import W, H, screen, SQUARE_SIZE
+from settings import *
 
 class Grid:
     grid = [["bR", "bN", "bB", "bQ", "bK", "bB", "bN", "bR"],

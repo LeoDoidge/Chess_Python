@@ -63,7 +63,6 @@ def MovePiece(start_pos, end_pos, game_clock):
 
         board.Grid.grid[end_y][end_x] = piece
         board.Grid.grid[start_y][start_x] = "--"
-        print(legal_moves_dict[name](end_pos))
         return True
 
     return False
@@ -78,7 +77,6 @@ def EatPiece(start_pos, end_pos):
         return False
 
     if end_pos not in legal_eats_dict[name](start_pos):
-        print(legal_eats_dict[name](start_pos))
         return False
 
     if not (0 <= end_x < 8 and 0 <= end_y < 8):
