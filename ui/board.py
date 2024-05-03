@@ -66,8 +66,8 @@ def display_timer():
         True,
         (0, 0, 255),
     )
-    screen.blit(time_text_p1, ( (W - 500) // 2, H // 2 - 50))
-    screen.blit(time_text_p2, ((W - 500) // 2 , H // 2 + 50))
+    screen.blit(time_text_p1, ( (W - 500) // 2+ 500, H // 2 - 20))
+    screen.blit(time_text_p2, ((W - 500) // 2 + 500, H // 2 + 20))
 
 
 def DrawBoard(highlighted_pos, square_clicked):
