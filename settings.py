@@ -1,13 +1,13 @@
-'''
+"""
 This module handles all global variables
-'''
+"""
 
 import pygame
 
 H = 500
-W = 500
+W = 700
 BOARD_SIZE = 8
-SQUARE_SIZE = W // BOARD_SIZE
+SQUARE_SIZE = 62
 backround_color = 255, 255, 255
 screen = pygame.display.set_mode([W, H])
 RUNNING = True

@@ -47,7 +47,7 @@ while RUNNING:
                 else:
                     SELECTED_PIECE = None
                     print("Invalid move!")
-    screen.fill((0, 0, 0))
+    screen.fill((backround_color))
     board.DrawBoard(None, SQUARE_CLICKED)
 
     if SELECTED_PIECE:
