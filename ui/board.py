@@ -54,19 +54,20 @@ def Highlight(start_pos, end_pos):
         return None
 
 
-def display_timer():
-    # Display time for both players
+def display_timer(start_time, pointer, last_click):
+    seconds_left = [time_left[0].seconds, time_left[1].seconds]
+    seconds_left[pointer] -= (datetime.datetime.now() - last_click).seconds
     time_text_p1 = font.render(
-        str(time_left[0] // 60) + ":" + str(time_left[0] % 60).zfill(2),
+        str(seconds_left[1] // 60) + ":" + str(seconds_left[1] % 60).zfill(2),
         True,
         (255, 0, 0),
     )
     time_text_p2 = font.render(
-        str(time_left[1] // 60) + ":" + str(time_left[1] % 60).zfill(2),
+        str(seconds_left[0] // 60) + ":" + str(seconds_left[0] % 60).zfill(2),
         True,
         (0, 0, 255),
     )
-    screen.blit(time_text_p1, ( (W - 500) // 2+ 500, H // 2 - 20))
+    screen.blit(time_text_p1, ((W - 500) // 2 + 500, H // 2 - 20))
     screen.blit(time_text_p2, ((W - 500) // 2 + 500, H // 2 + 20))
 
 

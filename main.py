@@ -4,18 +4,29 @@ from settings import *
 from ui import board
 from utils import helpers
 from game_logic import piece_movement
+from countdown import countdown
+
 
 pygame.display.set_caption("Chess Project")
+last_click = datetime.datetime.now()
 
 
 clock = pygame.time.Clock()
-
+start_time = datetime.datetime.now()
 
 while RUNNING:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             RUNNING = False
-
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                time_left[player] -= datetime.datetime.now() - last_click
+                if player == 0:
+                    player += 1
+                elif player == 1:
+                    player -= 1
+                
+                last_click = datetime.datetime.now()
         elif event.type == pygame.MOUSEBUTTONDOWN:
             click_pos = pygame.mouse.get_pos()
             SQUARE_CLICKED = helpers.SquarePos(click_pos)
@@ -32,9 +43,7 @@ while RUNNING:
                 else:
                     MOVE_MADE = False
                     if helpers.CheckOccup(SQUARE_CLICKED):
-                        if helpers.Color(SQUARE_CLICKED) != helpers.Color(
-                            SELECTED_PIECE
-                        ):
+                        if helpers.Color(SQUARE_CLICKED) != helpers.Color(SELECTED_PIECE):
                             MOVE_MADE = piece_movement.EatPiece(
                                 SELECTED_PIECE, SQUARE_CLICKED
                             )
@@ -50,22 +59,14 @@ while RUNNING:
                         SELECTED_PIECE = None
                         print("Invalid move!")
             else:
-                print("Out of range")
+                print("Out of bounds!")
     screen.fill((backround_color))
     board.DrawBoard(None, SQUARE_CLICKED)
-    board.display_timer()
-
+    board.display_timer(start_time, player, last_click)
     if SELECTED_PIECE:
         selected_piece_color = helpers.Color(SELECTED_PIECE)
         board.Highlight(SELECTED_PIECE, SELECTED_PIECE)
 
-    if GAME_CLOCK % 2 == 0:
-        GAME_CLOCK = 0
-    else:
-        GAME_CLOCK = 1
-        
-    time_left[GAME_CLOCK] -= 1
-    pygame.time.wait(1000)
     pygame.display.update()
     clock.tick(60)
 

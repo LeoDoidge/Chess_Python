@@ -3,6 +3,7 @@ This module handles all global variables
 """
 
 import pygame
+import datetime
 
 pygame.font.init()
 
@@ -19,4 +20,5 @@ SQUARE_CLICKED = None
 GAME_CLOCK = 0
 SUCCESSFUL_MOVES = 0
 font = pygame.font.Font(None, 36)  
-time_left = [900, 900]  
+time_left = [datetime.timedelta(minutes=15), datetime.timedelta(minutes=15)]
+player = 0
