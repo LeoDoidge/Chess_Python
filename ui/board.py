@@ -54,6 +54,22 @@ def Highlight(start_pos, end_pos):
         return None
 
 
+def display_timer():
+    # Display time for both players
+    time_text_p1 = font.render(
+        str(time_left[0] // 60) + ":" + str(time_left[0] % 60).zfill(2),
+        True,
+        (255, 0, 0),
+    )
+    time_text_p2 = font.render(
+        str(time_left[1] // 60) + ":" + str(time_left[1] % 60).zfill(2),
+        True,
+        (0, 0, 255),
+    )
+    screen.blit(time_text_p1, ( (W - 500) // 2, H // 2 - 50))
+    screen.blit(time_text_p2, ((W - 500) // 2 , H // 2 + 50))
+
+
 def DrawBoard(highlighted_pos, square_clicked):
     for row in range(8):
         for col in range(8):

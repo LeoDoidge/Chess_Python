@@ -49,13 +49,16 @@ while RUNNING:
                     print("Invalid move!")
     screen.fill((backround_color))
     board.DrawBoard(None, SQUARE_CLICKED)
+    board.display_timer()
 
     if SELECTED_PIECE:
         selected_piece_color = helpers.Color(SELECTED_PIECE)
         board.Highlight(SELECTED_PIECE, SELECTED_PIECE)
 
+    time_left[GAME_CLOCK] -= 1
+    pygame.time.wait(1000)
     pygame.display.update()
-    clock.tick(10)
+    clock.tick(60)
 
 
 sys.exit()
