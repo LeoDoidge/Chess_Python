@@ -84,7 +84,7 @@ def DrawBoard(highlighted_pos, square_clicked):
                     screen, (150, 150, 150), (x, y, SQUARE_SIZE, SQUARE_SIZE)
                 )
     # Deviding line in between info bar and board
-    pygame.draw.rect(screen, (0, 0, 0), (495, 0, 3, H))
+    pygame.draw.rect(screen, (0, 0, 0), (496, 0, 3, H))
 
     for i in range(8):
         for j in range(8):

@@ -32,5 +32,7 @@ def CheckOccup(square_pos):
 def SquarePos(pos):
     x = pos[0]
     y = pos[1]
-    square_pos = (int(x / W * 8), int(y / H * 8))
+    if x > 500:
+        return None
+    square_pos = (int(x / H * 8), int(y / H * 8))
     return square_pos
