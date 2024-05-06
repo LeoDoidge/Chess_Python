@@ -4,8 +4,8 @@ from settings import *
 from ui import board
 from utils import helpers
 from game_logic import piece_movement
-from countdown import countdown
 
+# Test
 
 pygame.display.set_caption("Chess Project")
 last_click = datetime.datetime.now()
