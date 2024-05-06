@@ -5,7 +5,6 @@ from ui import board
 from utils import helpers
 from game_logic import piece_movement
 
-# Test
 
 pygame.display.set_caption("Chess Project")
 last_click = datetime.datetime.now()
@@ -53,7 +52,10 @@ while RUNNING:
                         )
 
                     if MOVE_MADE:
-                        GAME_CLOCK += 1
+                        if GAME_CLOCK == 0:
+                            GAME_CLOCK = 1
+                        elif GAME_CLOCK == 1:
+                            GAME_CLOCK = 0
                         SELECTED_PIECE = None
                     else:
                         SELECTED_PIECE = None
