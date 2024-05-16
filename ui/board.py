@@ -2,16 +2,18 @@ from os import path
 import pygame
 from settings import *
 
+
 class Grid:
-    grid = [["bR", "bN", "bB", "bQ", "bK", "bB", "bN", "bR"],
-            ["bp", "bp", "bp", "bp", "bp", "bp", "bp", "bp"],
-            ["--", "--", "--", "--", "--", "--", "--", "--"],
-            ["--", "--", "--", "--", "--", "--", "--", "--"],
-            ["--", "--", "--", "--", "--", "--", "--", "--"],
-            ["--", "--", "--", "--", "--", "--", "--", "--"],
-            ["wp", "wp", "wp", "wp", "wp", "wp", "wp", "wp"],
-            ["wR", "wN", "wB", "wQ", "wK", "wB", "wN", "wR"],
-        ]
+    grid = [
+        ["bR", "bN", "bB", "bQ", "bK", "bB", "bN", "bR"],
+        ["bp", "bp", "bp", "bp", "bp", "bp", "bp", "bp"],
+        ["--", "--", "--", "--", "--", "--", "--", "--"],
+        ["--", "--", "--", "--", "--", "--", "--", "--"],
+        ["--", "--", "--", "--", "--", "--", "--", "--"],
+        ["--", "--", "--", "--", "--", "--", "--", "--"],
+        ["wp", "wp", "wp", "wp", "wp", "wp", "wp", "wp"],
+        ["wR", "wN", "wB", "wQ", "wK", "wB", "wN", "wR"],
+    ]
 
     def __init__(self):
         pass
@@ -25,9 +27,10 @@ def DrawPiece(x, y, game):
         else:
             image = pygame.image.load(path.join("assets", "images", name + ".png"))
             imagerect = image.get_rect()
-            imagerect.left = (W - H) / 2 + x * H / 8
+            imagerect.left = x * H / 8
             imagerect.top = y * H / 8
             game.blit(image, imagerect)
+
 
 def Highlight(start_pos, end_pos):
     start_x, start_y = start_pos
@@ -50,6 +53,29 @@ def Highlight(start_pos, end_pos):
     elif Grid.grid[start_y][start_x][0] != Grid.grid[end_y][end_x][0]:
         return None
 
+
+def display_timer(pointer, last_click):
+    seconds_left = [time_left[0].seconds, time_left[1].seconds]
+    seconds_left[pointer] -= (datetime.datetime.now() - last_click).seconds
+    time_text_p1 = font.render(
+        str(seconds_left[1] // 60) + ":" + str(seconds_left[1] % 60).zfill(2),
+        True,
+        (0, 0, 0),
+    )
+    time_text_p2 = font.render(
+        str(seconds_left[0] // 60) + ":" + str(seconds_left[0] % 60).zfill(2),
+        True,
+        (255, 255, 255),
+    )
+    screen.blit(time_text_p1, ((W - 500) // 2 + 470, H // 2 - 20))
+    screen.blit(time_text_p2, ((W - 500) // 2 + 470, H // 2 + 20))
+
+
+def total_moves_display(tt_moves):
+    tt_moves = font.render(str(tt_moves), True, (0, 0, 0))
+    screen.blit(tt_moves, ((W - 500) // 2 + 500, 50))
+
+
 def DrawBoard(highlighted_pos, square_clicked):
     for row in range(8):
         for col in range(8):
@@ -63,6 +89,8 @@ def DrawBoard(highlighted_pos, square_clicked):
                 pygame.draw.rect(
                     screen, (150, 150, 150), (x, y, SQUARE_SIZE, SQUARE_SIZE)
                 )
+    # Deviding line in between info bar and board
+    pygame.draw.rect(screen, (0, 0, 0), (496, 0, 3, H))
 
     for i in range(8):
         for j in range(8):

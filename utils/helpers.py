@@ -1,4 +1,4 @@
-from settings import H
+from settings import *
 
 from ui import board
 
@@ -32,5 +32,14 @@ def CheckOccup(square_pos):
 def SquarePos(pos):
     x = pos[0]
     y = pos[1]
+    if x > 500:
+        return None
     square_pos = (int(x / H * 8), int(y / H * 8))
     return square_pos
+
+def ClockSwitch(GAME_CLOCK):
+    if GAME_CLOCK == 0:
+        GAME_CLOCK = 1
+    elif GAME_CLOCK == 1:
+        GAME_CLOCK = 0
+        return GAME_CLOCK
