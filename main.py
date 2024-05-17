@@ -53,7 +53,7 @@ while RUNNING:
                         )
 
                     if MOVE_MADE:
-                        NMB_MOVES_TOTAL += 1
+                        NMB_MOVES_TOTAL += 1  
                         time_left[GAME_CLOCK] -= datetime.datetime.now() - last_click
                         if GAME_CLOCK == 0:
                             GAME_CLOCK = 1
@@ -66,11 +66,10 @@ while RUNNING:
                         print("Invalid move!")
             else:
                 print("Out of bounds!")
-
     screen.fill((backround_color))
     board.DrawBoard(None, SQUARE_CLICKED)
-    board.display_timer(GAME_CLOCK, last_click)
-    board.total_moves_display(NMB_MOVES_TOTAL)
+    board.DisplayTimer(GAME_CLOCK, last_click)
+    board.TotalMovesDisplay(NMB_MOVES_TOTAL)
     if SELECTED_PIECE:
         selected_piece_color = helpers.Color(SELECTED_PIECE)
         board.Highlight(SELECTED_PIECE, SELECTED_PIECE)
