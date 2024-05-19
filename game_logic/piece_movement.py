@@ -1,11 +1,10 @@
-'''
+"""
 This module handles all piece movement
-'''
+"""
 
 from utils import helpers
 from ui import board
 from game_logic import pieces
-
 
 PiecesClass = pieces.Pieces()
 
@@ -72,7 +71,7 @@ def EatPiece(start_pos, end_pos):
     start_x, start_y = start_pos
     end_x, end_y = end_pos
     name = helpers.TypePiece(start_pos)
-
+    
     if not (0 <= start_x < 8 and 0 <= start_y < 8):
         return False
 
@@ -87,9 +86,7 @@ def EatPiece(start_pos, end_pos):
     if board.Grid.grid[end_y][end_x] != "--" and helpers.Color(
         start_pos
     ) != helpers.Color(end_pos):
-
         board.Grid.grid[end_y][end_x] = piece
         board.Grid.grid[start_y][start_x] = "--"
         return True
-
     return False

@@ -54,7 +54,7 @@ def Highlight(start_pos, end_pos):
         return None
 
 
-def display_timer(pointer, last_click):
+def DisplayTimer(pointer, last_click):
     seconds_left = [time_left[0].seconds, time_left[1].seconds]
     seconds_left[pointer] -= (datetime.datetime.now() - last_click).seconds
     time_text_p1 = font.render(
@@ -71,7 +71,7 @@ def display_timer(pointer, last_click):
     screen.blit(time_text_p2, ((W - 500) // 2 + 470, H // 2 + 20))
 
 
-def total_moves_display(tt_moves):
+def TotalMovesDisplay(tt_moves):
     tt_moves = font.render(str(tt_moves), True, (0, 0, 0))
     screen.blit(tt_moves, ((W - 500) // 2 + 500, 50))
 
