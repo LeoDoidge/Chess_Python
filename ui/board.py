@@ -75,6 +75,10 @@ def TotalMovesDisplay(tt_moves):
     tt_moves = font.render(str(tt_moves), True, (0, 0, 0))
     screen.blit(tt_moves, ((W - 500) // 2 + 500, 50))
 
+def MoveButton():
+    text = font.render(str("Move list"), True, (0,0,0))
+    screen.blit(text, ((W - 500) // 2 - 50 + 500, 100))
+
 
 def DrawBoard(highlighted_pos, square_clicked):
     for row in range(8):
