@@ -1,5 +1,6 @@
 from os import path
 import pygame
+import tkinter as tk
 from settings import *
 
 
@@ -75,8 +76,9 @@ def TotalMovesDisplay(tt_moves):
     tt_moves = font.render(str(tt_moves), True, (0, 0, 0))
     screen.blit(tt_moves, ((W - 500) // 2 + 500, 50))
 
+
 def MoveButton():
-    text = font.render(str("Move list"), True, (0,0,0))
+    text = font.render(str("Move list"), True, (0, 0, 0))
     screen.blit(text, ((W - 500) // 2 - 50 + 500, 100))
 
 
@@ -102,3 +104,17 @@ def DrawBoard(highlighted_pos, square_clicked):
 
     if highlighted_pos is not None:
         Highlight(highlighted_pos, square_clicked)
+
+
+def SecondaryWindow():
+    window = tk.Tk()
+    window.title("Move list")
+
+    for x in range(20):
+        for y in range(2):
+            frame = tk.Frame(master=window, relief=tk.RAISED, borderwidth=1)
+            frame.grid(row=x, column=y)  # line 13
+            label = tk.Label(master=frame, text="hello world")
+            label.pack()
+
+    window.mainloop()

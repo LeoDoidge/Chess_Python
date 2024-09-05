@@ -67,7 +67,7 @@ while RUNNING:
                         print("Invalid move!")
 
             if 550 < click_pos[0] < 650 and 95 < click_pos[1] < 125:
-                pass
+                board.SecondaryWindow()
 
             else:
                 print("Out of bounds!")
