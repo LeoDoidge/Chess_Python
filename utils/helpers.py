@@ -19,6 +19,11 @@ def TypePiece(clicked_pos):
     x, y = clicked_pos
     return board.Grid.grid[y][x]
 
+def TypeMove(clicked_pos): 
+    Move = ""
+    Piece = TypePiece(clicked_pos)
+    
+    return Move
 
 def CheckOccup(square_pos):
     for i in range(8):
