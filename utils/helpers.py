@@ -48,3 +48,14 @@ def ClockSwitch(GAME_CLOCK):
     elif GAME_CLOCK == 1:
         GAME_CLOCK = 0
         return GAME_CLOCK
+    
+def ConverterPyToChess(coordinates):
+    
+    if not (isinstance(coordinates, tuple) and len(coordinates) == 2 and all(0 <= i <= 7 for i in coordinates)):
+        raise ValueError("Input must be a tuple with two integers in the range 0-7.")
+    
+    columns = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
+    row = 8 - coordinates[1]
+    column = columns[coordinates[0]]
+    return f"{column}{row}"
+

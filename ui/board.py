@@ -116,6 +116,6 @@ def SecondaryWindow(movelist, eatlist):
         for y in range(2):
             frame = tk.Frame(master=window, relief=tk.RAISED, borderwidth=1)
             frame.grid(row=x, column=y) 
-            label.pack()
-
+    
     window.mainloop()
+
