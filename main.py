@@ -36,7 +36,7 @@ def OpenSecondaryWindow():
                     height=2,
                 )
                 label.grid(row=row, column=col, padx=1, pady=1)
-        window.after(1000, UpdateWindow)
+        window.after(10, UpdateWindow)
     UpdateWindow()
     window.mainloop()
 
