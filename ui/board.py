@@ -1,3 +1,7 @@
+"""
+This module handles all display functions
+"""
+
 from os import path
 import tkinter as tk
 import pygame
@@ -106,15 +110,18 @@ def DrawBoard(highlighted_pos, square_clicked):
         Highlight(highlighted_pos, square_clicked)
 
 
-def SecondaryWindow():
-    print(f"{MOVE_ORIGIN_TYPE[-1]}{MOVE_ORIGIN[-1]} to:  {MOVE_DESTINATION[-1]}")
-    print(
-        f"{EAT_ORIGIN_TYPE[-1]}{EAT_ORIGIN[-1]} to:  {EAT_DESTINATION_TYPE[-1]}{EAT_DESTINATION[-1]}"
-    )
+def SecondaryWindow(tt_moves):
     window = tk.Tk()
     window.title("Move list")
-    for x in range(20):
-        for y in range(2):
-            frame = tk.Frame(master=window, relief=tk.RAISED, borderwidth=1)
-            frame.grid(row=x, column=y)
+    for row in range(tt_moves):
+        for col in range(2):
+            label = tk.Label(
+                window,
+                text=f'R{row}, C{col}',
+                borderwidth=1,
+                relief="solid",
+                width=8,
+                height=2,
+            )
+            label.grid(row=row, column=col, padx=1, pady=1)
     window.mainloop()

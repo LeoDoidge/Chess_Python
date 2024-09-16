@@ -1,3 +1,7 @@
+"""
+Module for functions used across the code 
+"""
+
 from settings import *
 from ui import board
 
@@ -37,35 +41,62 @@ def SquarePos(pos):
     return square_pos
 
 
-def ConverterPyToChess(coordinates):
+class Converter:
+    def __init__(self):
+        pass
 
-    if not (
-        isinstance(coordinates, tuple)
-        and len(coordinates) == 2
-        and all(0 <= i <= 7 for i in coordinates)
-    ):
-        raise ValueError("Input must be a tuple with two integers in the range 0-7.")
+    def ImageName(self, name):
+        if name[1] == "p":
+            return "Pawn"
+        if name[1] == "N":
+            return "Knight"
+        if name[1] == "B":
+            return "Bishop"
+        if name[1] == "Q":
+            return "Queen"
+        if name[1] == "K":
+            return "King"
+        if name[1] == "R":
+            return "Rook"
 
-    columns = ["A", "B", "C", "D", "E", "F", "G", "H"]
-    row = 8 - coordinates[1]
-    column = columns[coordinates[0]]
-    return f"{column}{row}"
+    def PyToChess(self, coordinates):
+        if not (
+            isinstance(coordinates, tuple)
+            and len(coordinates) == 2
+            and all(0 <= i <= 7 for i in coordinates)
+        ):
+            raise ValueError(
+                "Input must be a tuple with two integers in the range 0-7."
+            )
 
+        columns = ["A", "B", "C", "D", "E", "F", "G", "H"]
+        row = 8 - coordinates[1]
+        column = columns[coordinates[0]]
+        return f"{column}{row}"
 
-def ArithmeticNotationConverter():
-    pass
+    def EatNotation(self):
+        pass
 
+    def CheckNotation(self):
+        pass
 
-def ImageNameConverter(name):
-    if name[1] == "p":
-        return "Pawn"
-    if name[1] == "N":
-        return "Knight"
-    if name[1] == "B":
-        return "Bishop"
-    if name[1] == "Q":
-        return "Queen"
-    if name[1] == "K":
-        return "King"
-    if name[1] == "R":
-        return "Rook"
+    def CheckMateNotation(self):
+        pass
+
+    def PawnNotation(self):
+        return f"{self.PyToChess(self.destination)}"
+
+    def RookNotation(self):
+        return f"R{self.PyToChess(self.destination)}"
+
+    def KnightNotation(self):
+        return f"N{self.PyToChess(self.destination)}"
+
+    def BishopNotation(self):
+        return f"B{self.PyToChess(self.destination)}"
+
+    def QueenNotation(self):
+        return f"Q{self.PyToChess(self.destination)}"
+
+    def KingNotation(self):
+        return f"K{self.PyToChess(self.destination)}"

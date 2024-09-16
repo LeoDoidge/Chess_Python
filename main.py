@@ -1,3 +1,7 @@
+"""
+Main module to run the app
+"""
+
 import sys
 import pygame
 from settings import *
@@ -12,6 +16,7 @@ last_click = datetime.datetime.now()
 
 clock = pygame.time.Clock()
 start_time = datetime.datetime.now()
+converter = helpers.Converter()
 
 while RUNNING:
 
@@ -51,11 +56,9 @@ while RUNNING:
                                 SELECTED_PIECE, SQUARE_CLICKED
                             )
                             if MOVE_MADE:
-                                EAT_ORIGIN.append(
-                                    helpers.ConverterPyToChess(SELECTED_PIECE)
-                                )
+                                EAT_ORIGIN.append(converter.PyToChess(SELECTED_PIECE))
                                 EAT_DESTINATION.append(
-                                    helpers.ConverterPyToChess(SQUARE_CLICKED)
+                                    converter.PyToChess(SQUARE_CLICKED)
                                 )
 
                     else:
@@ -63,12 +66,8 @@ while RUNNING:
                             SELECTED_PIECE, SQUARE_CLICKED, GAME_CLOCK
                         )
                         if MOVE_MADE:
-                            MOVE_ORIGIN.append(
-                                helpers.ConverterPyToChess(SELECTED_PIECE)
-                            )
-                            MOVE_DESTINATION.append(
-                                helpers.ConverterPyToChess(SQUARE_CLICKED)
-                            )
+                            MOVE_ORIGIN.append(converter.PyToChess(SELECTED_PIECE))
+                            MOVE_DESTINATION.append(converter.PyToChess(SQUARE_CLICKED))
 
                     if MOVE_MADE:
                         if helpers.Color(SQUARE_CLICKED) == "b":
@@ -89,11 +88,10 @@ while RUNNING:
                         SELECTED_PIECE = None
                         print("Invalid move!")
 
+            elif 550 < click_pos[0] < 650 and 95 < click_pos[1] < 125:
+                board.SecondaryWindow(NMB_MOVES_TOTAL)
             else:
                 print("Out of bounds!")
-
-            if 550 < click_pos[0] < 650 and 95 < click_pos[1] < 125:
-                board.SecondaryWindow()
 
     screen.fill((backround_color))
 

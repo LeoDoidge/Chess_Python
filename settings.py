@@ -22,7 +22,6 @@ GAME_CLOCK = 0
 SUCCESSFUL_MOVES = 0
 font = pygame.font.Font(None, 36)
 time_left = [datetime.timedelta(minutes=15), datetime.timedelta(minutes=15)]
-PLAYER = 0
 NMB_MOVES_TOTAL = 0
 MOVE_ORIGIN = []
 MOVE_DESTINATION = []
