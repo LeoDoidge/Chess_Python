@@ -2,4 +2,5 @@
     "pylint.args": [
         "--rcfile=${workspaceFolder}/.vscode/.pylintrc"
     ],
+    "files.autoSaveWhenNoErrors": true,
 }
