@@ -1,7 +1,7 @@
 """
-Main module to run the app
+Module handles Main app 
 """
-
+import threading
 import sys
 import pygame
 from settings import *
@@ -9,14 +9,16 @@ from ui import board
 from utils import helpers
 from game_logic import piece_movement
 
-
 pygame.display.set_caption("Chess Project")
 last_click = datetime.datetime.now()
-
 
 clock = pygame.time.Clock()
 start_time = datetime.datetime.now()
 converter = helpers.Converter()
+
+
+def OpenSecondaryWindow():
+    board.SecondaryWindow(NMB_MOVES_TOTAL)
 
 while RUNNING:
 
@@ -88,8 +90,9 @@ while RUNNING:
                         SELECTED_PIECE = None
                         print("Invalid move!")
 
+
             elif 550 < click_pos[0] < 650 and 95 < click_pos[1] < 125:
-                board.SecondaryWindow(NMB_MOVES_TOTAL)
+                threading.Thread(target=OpenSecondaryWindow).start()
             else:
                 print("Out of bounds!")
 
@@ -105,6 +108,5 @@ while RUNNING:
 
     pygame.display.update()
     clock.tick(60)
-
 
 sys.exit()
