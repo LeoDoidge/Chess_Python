@@ -1,8 +1,6 @@
-"""
-Module handles Main app 
-"""
 import threading
 import sys
+import tkinter as tk
 import pygame
 from settings import *
 from ui import board
@@ -16,9 +14,32 @@ clock = pygame.time.Clock()
 start_time = datetime.datetime.now()
 converter = helpers.Converter()
 
-
 def OpenSecondaryWindow():
-    board.SecondaryWindow(NMB_MOVES_TOTAL)
+    window = tk.Tk()
+    window.title("Move List")
+
+    move_frame = tk.Frame(window)
+    move_frame.pack()
+
+    def UpdateWindow():
+        for widget in move_frame.winfo_children():
+            widget.destroy()
+
+        for row in range(NMB_MOVES_TOTAL):
+            for col in range(2):
+                label = tk.Label(
+                    move_frame,
+                    text=f'R{row}, C{col}',
+                    borderwidth=1,
+                    relief="solid",
+                    width=8,
+                    height=2,
+                )
+                label.grid(row=row, column=col, padx=1, pady=1)
+        window.after(1000, UpdateWindow)
+    UpdateWindow()
+    window.mainloop()
+
 
 while RUNNING:
 

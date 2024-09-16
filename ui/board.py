@@ -3,7 +3,6 @@ This module handles all display functions
 """
 
 from os import path
-import tkinter as tk
 import pygame
 from settings import *
 
@@ -108,20 +107,3 @@ def DrawBoard(highlighted_pos, square_clicked):
 
     if highlighted_pos is not None:
         Highlight(highlighted_pos, square_clicked)
-
-
-def SecondaryWindow(tt_moves):
-    window = tk.Tk()
-    window.title("Move list")
-    for row in range(tt_moves):
-        for col in range(2):
-            label = tk.Label(
-                window,
-                text=f'R{row}, C{col}',
-                borderwidth=1,
-                relief="solid",
-                width=8,
-                height=2,
-            )
-            label.grid(row=row, column=col, padx=1, pady=1)
-    window.mainloop()
