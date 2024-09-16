@@ -13,6 +13,7 @@ last_click = datetime.datetime.now()
 clock = pygame.time.Clock()
 start_time = datetime.datetime.now()
 converter = helpers.Converter()
+MOVES_DISPLAYED = 0
 
 def OpenSecondaryWindow():
     window = tk.Tk()
@@ -22,6 +23,11 @@ def OpenSecondaryWindow():
     move_frame.pack()
 
     def UpdateWindow():
+        global MOVES_DISPLAYED
+        is_dirty = NMB_MOVES_TOTAL != MOVES_DISPLAYED
+        if not is_dirty:
+            window.after(10, UpdateWindow)
+            return
         for widget in move_frame.winfo_children():
             widget.destroy()
 
@@ -36,6 +42,7 @@ def OpenSecondaryWindow():
                     height=2,
                 )
                 label.grid(row=row, column=col, padx=1, pady=1)
+        MOVES_DISPLAYED = NMB_MOVES_TOTAL
         window.after(10, UpdateWindow)
     UpdateWindow()
     window.mainloop()
