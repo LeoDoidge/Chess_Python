@@ -5,7 +5,7 @@ This module handles all piece movement
 from utils import helpers
 from ui import board
 from game_logic import pieces
-from settings import *
+from settings import MOVE_ORIGIN_TYPE, EAT_ORIGIN_TYPE, EAT_DESTINATION_TYPE
 
 PiecesClass = pieces.Pieces()
 
@@ -60,8 +60,10 @@ def MovePiece(start_pos, end_pos, game_clock):
     piece = board.Grid.grid[start_y][start_x]
 
     if board.Grid.grid[end_y][end_x] == "--":
-        
-        MOVE_ORIGIN_TYPE.append(helpers.ImageNameConverter(helpers.TypePiece(start_pos)))
+
+        MOVE_ORIGIN_TYPE.append(
+            helpers.ImageNameConverter(helpers.TypePiece(start_pos))
+        )
         board.Grid.grid[end_y][end_x] = piece
         board.Grid.grid[start_y][start_x] = "--"
         return True
@@ -73,7 +75,7 @@ def EatPiece(start_pos, end_pos):
     start_x, start_y = start_pos
     end_x, end_y = end_pos
     name = helpers.TypePiece(start_pos)
-    
+
     if not (0 <= start_x < 8 and 0 <= start_y < 8):
         return False
 
@@ -89,7 +91,9 @@ def EatPiece(start_pos, end_pos):
         start_pos
     ) != helpers.Color(end_pos):
         EAT_ORIGIN_TYPE.append(helpers.ImageNameConverter(helpers.TypePiece(start_pos)))
-        EAT_DESTINATION_TYPE.append(helpers.ImageNameConverter(helpers.TypePiece(end_pos)))
+        EAT_DESTINATION_TYPE.append(
+            helpers.ImageNameConverter(helpers.TypePiece(end_pos))
+        )
         board.Grid.grid[end_y][end_x] = piece
         board.Grid.grid[start_y][start_x] = "--"
         return True

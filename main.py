@@ -51,16 +51,24 @@ while RUNNING:
                                 SELECTED_PIECE, SQUARE_CLICKED
                             )
                             if MOVE_MADE:
-                                EAT_ORIGIN.append(helpers.PyToChessConverter(SELECTED_PIECE))
-                                EAT_DESTINATION.append(helpers.PyToChessConverter(SQUARE_CLICKED))
+                                EAT_ORIGIN.append(
+                                    helpers.ConverterPyToChess(SELECTED_PIECE)
+                                )
+                                EAT_DESTINATION.append(
+                                    helpers.ConverterPyToChess(SQUARE_CLICKED)
+                                )
 
                     else:
                         MOVE_MADE = piece_movement.MovePiece(
                             SELECTED_PIECE, SQUARE_CLICKED, GAME_CLOCK
                         )
                         if MOVE_MADE:
-                            MOVE_ORIGIN.append(helpers.PyToChessConverter(SELECTED_PIECE))
-                            MOVE_DESTINATION.append(helpers.PyToChessConverter(SQUARE_CLICKED))
+                            MOVE_ORIGIN.append(
+                                helpers.ConverterPyToChess(SELECTED_PIECE)
+                            )
+                            MOVE_DESTINATION.append(
+                                helpers.ConverterPyToChess(SQUARE_CLICKED)
+                            )
 
                     if MOVE_MADE:
                         if helpers.Color(SQUARE_CLICKED) == "b":

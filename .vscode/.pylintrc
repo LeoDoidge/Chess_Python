@@ -11,5 +11,7 @@ disable=
     C0114,               # missing-module-docstring
     C0115,               # missing-class-docstring
     C0116,               # missing-function-docstring
-    
-disable=wildcard-import, # wildcard imports
+    wildcard-import,     # wildcard imports
+    W0614,               # Unused imports
+    C0301,               # Line too long
+    E1101,               # Module "" has no "" Member

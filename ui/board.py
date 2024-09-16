@@ -1,6 +1,6 @@
 from os import path
-import pygame
 import tkinter as tk
+import pygame
 from settings import *
 
 
@@ -107,8 +107,10 @@ def DrawBoard(highlighted_pos, square_clicked):
 
 
 def SecondaryWindow():
-    print(f'{MOVE_ORIGIN_TYPE[-1]}{MOVE_ORIGIN[-1]} to:  {MOVE_DESTINATION[-1]}')
-    print(f'{EAT_ORIGIN_TYPE[-1]}{EAT_ORIGIN[-1]} to:  {EAT_DESTINATION_TYPE[-1]}{EAT_DESTINATION[-1]}')
+    print(f"{MOVE_ORIGIN_TYPE[-1]}{MOVE_ORIGIN[-1]} to:  {MOVE_DESTINATION[-1]}")
+    print(
+        f"{EAT_ORIGIN_TYPE[-1]}{EAT_ORIGIN[-1]} to:  {EAT_DESTINATION_TYPE[-1]}{EAT_DESTINATION[-1]}"
+    )
     window = tk.Tk()
     window.title("Move list")
     for x in range(20):
@@ -116,4 +118,3 @@ def SecondaryWindow():
             frame = tk.Frame(master=window, relief=tk.RAISED, borderwidth=1)
             frame.grid(row=x, column=y)
     window.mainloop()
-
