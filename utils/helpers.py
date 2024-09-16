@@ -19,12 +19,6 @@ def TypePiece(clicked_pos):
     x, y = clicked_pos
     return board.Grid.grid[y][x]
 
-def TypeMove(clicked_pos): 
-    Move = ""
-    Piece = TypePiece(clicked_pos)
-    
-    return Move
-
 def CheckOccup(square_pos):
     for i in range(8):
         for j in range(8):
@@ -59,3 +53,18 @@ def ConverterPyToChess(coordinates):
     column = columns[coordinates[0]]
     return f"{column}{row}"
 
+def ArithmeticNotationConverter():
+    pass
+def ImageNameConverter(name):
+    if name[1] == "p":
+        return "Pawn"
+    if name[1] == "N":
+        return "Knight"
+    if name[1] == "B":
+        return "Bishop"
+    if name[1] == "Q":
+        return "Queen"
+    if name[1] == "K":
+        return "King"
+    if name[1] == "R":
+        return "Rook"

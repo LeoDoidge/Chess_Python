@@ -23,6 +23,10 @@ font = pygame.font.Font(None, 36)
 time_left = [datetime.timedelta(minutes=15), datetime.timedelta(minutes=15)]
 player = 0
 NMB_MOVES_TOTAL = 0
-MOVE_LIST = []
-EAT_LIST = []
-EATEN_PIECE = []
+MOVE_ORIGIN = []
+MOVE_DESTINATION = []
+MOVE_ORIGIN_TYPE = []
+EAT_ORIGIN = []
+EAT_DESTINATION = []
+EAT_ORIGIN_TYPE = []
+EAT_DESTINATION_TYPE = []

@@ -106,16 +106,14 @@ def DrawBoard(highlighted_pos, square_clicked):
         Highlight(highlighted_pos, square_clicked)
 
 
-def SecondaryWindow(movelist, eatlist):
+def SecondaryWindow():
+    print(f'{MOVE_ORIGIN_TYPE[-1]}{MOVE_ORIGIN[-1]} to:  {MOVE_DESTINATION[-1]}')
+    print(f'{EAT_ORIGIN_TYPE[-1]}{EAT_ORIGIN[-1]} to:  {EAT_DESTINATION_TYPE[-1]}{EAT_DESTINATION[-1]}')
     window = tk.Tk()
     window.title("Move list")
-    print(movelist)
-    print(eatlist)
-    print(EATEN_PIECE)
     for x in range(20):
         for y in range(2):
             frame = tk.Frame(master=window, relief=tk.RAISED, borderwidth=1)
-            frame.grid(row=x, column=y) 
-    
+            frame.grid(row=x, column=y)
     window.mainloop()
 

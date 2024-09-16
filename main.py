@@ -47,21 +47,20 @@ while RUNNING:
                         if helpers.Color(SQUARE_CLICKED) != helpers.Color(
                             SELECTED_PIECE
                         ):
-                            EATEN_PIECE.append(helpers.TypePiece(SQUARE_CLICKED))
                             MOVE_MADE = piece_movement.EatPiece(
                                 SELECTED_PIECE, SQUARE_CLICKED
                             )
                             if MOVE_MADE:
-                                EAT_LIST.append(helpers.ConverterPyToChess(SELECTED_PIECE))
-                                EAT_LIST.append(helpers.ConverterPyToChess(SQUARE_CLICKED))
+                                EAT_ORIGIN.append(helpers.PyToChessConverter(SELECTED_PIECE))
+                                EAT_DESTINATION.append(helpers.PyToChessConverter(SQUARE_CLICKED))
 
                     else:
                         MOVE_MADE = piece_movement.MovePiece(
                             SELECTED_PIECE, SQUARE_CLICKED, GAME_CLOCK
                         )
                         if MOVE_MADE:
-                            MOVE_LIST.append(helpers.ConverterPyToChess(SELECTED_PIECE))
-                            MOVE_LIST.append(helpers.ConverterPyToChess(SQUARE_CLICKED))
+                            MOVE_ORIGIN.append(helpers.PyToChessConverter(SELECTED_PIECE))
+                            MOVE_DESTINATION.append(helpers.PyToChessConverter(SQUARE_CLICKED))
 
                     if MOVE_MADE:
                         if helpers.Color(SQUARE_CLICKED) == "b":
@@ -86,7 +85,7 @@ while RUNNING:
                 print("Out of bounds!")
 
             if 550 < click_pos[0] < 650 and 95 < click_pos[1] < 125:
-                board.SecondaryWindow(MOVE_LIST,EAT_LIST)
+                board.SecondaryWindow()
 
     screen.fill((backround_color))
 
