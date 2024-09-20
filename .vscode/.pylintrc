@@ -15,3 +15,4 @@ disable=
     W0614,               # Unused imports
     C0301,               # Line too long
     E1101,               # Module "" has no "" Member
+    W0603,

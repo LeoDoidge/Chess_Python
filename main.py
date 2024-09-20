@@ -15,12 +15,28 @@ start_time = datetime.datetime.now()
 converter = helpers.Converter()
 MOVES_DISPLAYED = 0
 
+
 def OpenSecondaryWindow():
     window = tk.Tk()
     window.title("Move List")
+    window.geometry("200x300")
 
     move_frame = tk.Frame(window)
-    move_frame.pack()
+    move_frame.pack(fill=tk.BOTH, expand=1)
+
+    canvas = tk.Canvas(move_frame, width=150)
+    canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=1)
+
+    scrollbar = tk.Scrollbar(move_frame, orient=tk.VERTICAL, command=canvas.yview)
+    scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+
+    canvas.configure(yscrollcommand=scrollbar.set)
+    canvas.bind(
+        "<Configure>", lambda e: canvas.configure(scrollregion=canvas.bbox("all"))
+    )
+
+    move_frame = tk.Frame(canvas)
+    canvas.create_window((0, 0), window=move_frame, anchor="nw")
 
     def UpdateWindow():
         global MOVES_DISPLAYED
@@ -28,6 +44,7 @@ def OpenSecondaryWindow():
         if not is_dirty:
             window.after(10, UpdateWindow)
             return
+
         for widget in move_frame.winfo_children():
             widget.destroy()
 
@@ -35,15 +52,17 @@ def OpenSecondaryWindow():
             for col in range(2):
                 label = tk.Label(
                     move_frame,
-                    text=f'R{row}, C{col}',
+                    text=f"R{row}, C{col}",
                     borderwidth=1,
                     relief="solid",
                     width=8,
                     height=2,
                 )
                 label.grid(row=row, column=col, padx=1, pady=1)
+
         MOVES_DISPLAYED = NMB_MOVES_TOTAL
         window.after(10, UpdateWindow)
+
     UpdateWindow()
     window.mainloop()
 
@@ -117,7 +136,6 @@ while RUNNING:
                     else:
                         SELECTED_PIECE = None
                         print("Invalid move!")
-
 
             elif 550 < click_pos[0] < 650 and 95 < click_pos[1] < 125:
                 threading.Thread(target=OpenSecondaryWindow).start()
