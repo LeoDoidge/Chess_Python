@@ -63,6 +63,7 @@ def MovePiece(start_pos, end_pos, game_clock):
     if board.Grid.grid[end_y][end_x] == "--":
 
         MOVE_ORIGIN_TYPE.append(converter.ImageName(helpers.TypePiece(start_pos)))
+
         board.Grid.grid[end_y][end_x] = piece
         board.Grid.grid[start_y][start_x] = "--"
         return True
@@ -89,8 +90,10 @@ def EatPiece(start_pos, end_pos):
     if board.Grid.grid[end_y][end_x] != "--" and helpers.Color(
         start_pos
     ) != helpers.Color(end_pos):
+
         EAT_ORIGIN_TYPE.append(converter.ImageName(helpers.TypePiece(start_pos)))
         EAT_DESTINATION_TYPE.append(converter.ImageName(helpers.TypePiece(end_pos)))
+
         board.Grid.grid[end_y][end_x] = piece
         board.Grid.grid[start_y][start_x] = "--"
         return True
