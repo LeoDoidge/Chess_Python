@@ -267,8 +267,3 @@ class Piece:
                     legal_moves.append((new_x, new_y))
 
         return legal_moves
-
-board = Board() # Create a new board
-
-knight = Piece("knight", "white", 0, position=(0, 1)) # Create a white knight at position (0, 1)
-print(knight.KnightLegalMoves(board)) # Get legal moves for the knight
